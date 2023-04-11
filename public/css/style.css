@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Raleway:wght@300;400&display=swap");
+
+body {
+	background-color: rgb(246, 246, 246);
+	font-family: "Montserrat", sans-serif;
+}
+
+#images-section {
+	display: flex;
+	gap: 1rem;
+	margin: 1rem 0;
+	border-radius: 1rem;
+	padding: 1rem;
+}
+
+#shop-img-section {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+	row-gap: 1rem;
+	margin: 0.5rem;
+	justify-items: center;
+	align-items: center;
+}
+
+#nav {
+	display: flex;
+	border-radius: 1rem;
+	height: 3rem;
+	padding: 0 1rem;
+	justify-content: space-between;
+}
+
+.nav-links-div {
+	display: flex;
+	font-weight: 300;
+	font-size: 1.1rem;
+	align-self: center;
+	gap: 2rem;
+}
+
+.paragraph {
+	margin: 1rem 0;
+}
+
+.hr {
+	margin: 0;
+}
+
+.images {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 1rem;
+	gap: 1rem;
+	justify-content: space-around;
+}
+
+.featured {
+	width: 20rem;
+	object-fit: cover;
+	object-position: top;
+	aspect-ratio: 1 / 1;
+	border-radius: 100%;
+}
+
+.link {
+	text-decoration: none;
+	color: black;
+}
+
+.product-img {
+	outline: 1px solid gainsboro;
+	width: 100%;
+	border-radius: 0.5rem;
+	max-width: 15rem;
+	box-sizing: border-box;
+}
+
+/* 
+
+scrollbars
+
+*/
+
+::-webkit-scrollbar {
+	width: 0.5rem;
+}
+::-webkit-scrollbar-thumb {
+	background-color: gray;
+	border-radius: 0.5rem;
+}
