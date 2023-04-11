@@ -32,18 +32,14 @@ connectDB();
 
 app.get("/", (req, res) => {
 	try {
-		ejs.renderFile(
-			path.join(__dirname, "index.ejs"),
-			{ products },
-			(err, html) => {
-				if (err) {
-					console.error(`Error rendering template: ${err}`);
-					res.status(500).send("Error rendering template");
-				} else {
-					res.send(html);
-				}
+		ejs.renderFile(path.join(__dirname, "index.ejs"), {}, (err, html) => {
+			if (err) {
+				console.error(`Error rendering template: ${err}`);
+				res.status(500).send("Error rendering template");
+			} else {
+				res.send(html);
 			}
-		);
+		});
 	} catch (error) {
 		console.error(`Failed to fetch products: ${error}`);
 		res.status(500).send("Error fetching products");
