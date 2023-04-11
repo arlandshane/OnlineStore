@@ -30,9 +30,8 @@ const connectDB = async () => {
 };
 connectDB();
 
-app.get("/", async (req, res) => {
+app.get("/", (req, res) => {
 	try {
-		const products = await Product.find();
 		ejs.renderFile(
 			path.join(__dirname, "index.ejs"),
 			{ products },
