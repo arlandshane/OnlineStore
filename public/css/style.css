@@ -1,5 +1,32 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&family=Raleway:wght@300;400&display=swap");
 
+@media (max-width: 768px) {
+	.discover-define {
+		display: none;
+	}
+	.carousel-text {
+		display: block !important;
+	}
+}
+
+@keyframes anime {
+	0% {
+		color: black;
+	}
+	25% {
+		color: blueviolet;
+	}
+	50% {
+		color: palevioletred;
+	}
+	75% {
+		color: blueviolet;
+	}
+	100% {
+		color: black;
+	}
+}
+
 body {
 	background-color: rgb(246, 246, 246);
 	font-family: "Montserrat", sans-serif;
@@ -20,6 +47,7 @@ body {
 	margin: 0.5rem;
 	justify-items: center;
 	align-items: center;
+	margin: 2rem 0;
 }
 
 #nav {
@@ -73,6 +101,41 @@ body {
 	border-radius: 0.5rem;
 	max-width: 15rem;
 	box-sizing: border-box;
+	filter: saturate(1.25);
+}
+
+.discover-define {
+	position: absolute;
+	transform: translate(-50%, 0);
+	text-align: center;
+	font-size: 5rem;
+	font-weight: 500;
+	color: white;
+	white-space: nowrap;
+	z-index: 1;
+}
+
+.carousel-text {
+	transition: opacity 0.5s ease-in-out;
+	display: none;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	text-align: center;
+	font-size: 5rem;
+	font-weight: 500;
+	color: white;
+	white-space: nowrap;
+	z-index: 1;
+}
+
+.rolling-text {
+	color: violet;
+}
+
+.fa-brands {
+	animation: anime 5s ease infinite;
 }
 
 /* 

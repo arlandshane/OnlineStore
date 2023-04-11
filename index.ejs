@@ -9,44 +9,6 @@
 			src="https://kit.fontawesome.com/cd9e976117.js"
 			crossorigin="anonymous"
 		></script>
-		<style>
-			@media (max-width: 768px) {
-				.discover-define {
-					display: none;
-				}
-				.carousel-text {
-					display: block !important;
-				}
-			}
-
-			.discover-define {
-				position: absolute;
-				transform: translate(-50%, 0);
-				text-align: center;
-				font-size: 5rem;
-				font-weight: 500;
-				color: white;
-				white-space: nowrap;
-				z-index: 1;
-			}
-			.carousel-text {
-				transition: opacity 0.5s ease-in-out;
-				display: none;
-				position: absolute;
-				left: 50%;
-				top: 50%;
-				transform: translate(-50%, -50%);
-				text-align: center;
-				font-size: 5rem;
-				font-weight: 500;
-				color: white;
-				white-space: nowrap;
-				z-index: 1;
-			}
-			.rolling-text {
-				color: violet;
-			}
-		</style>
 	</head>
 	<body>
 		<nav id="nav">
@@ -57,13 +19,28 @@
 				>
 					Store
 				</div>
-				<a style="align-self: center" class="link" href="/shop">
+				<a
+					title="shop"
+					style="align-self: center"
+					class="link"
+					href="/shop"
+				>
 					<span>Shop</span>
 				</a>
-				<a style="align-self: center" class="link" href="/about">
+				<a
+					title="about"
+					style="align-self: center"
+					class="link"
+					href="/about"
+				>
 					<span>About</span>
 				</a>
-				<a style="align-self: center" class="link" href="/contact">
+				<a
+					title="contact"
+					style="align-self: center"
+					class="link"
+					href="/contact"
+				>
 					<span>Contact</span>
 				</a>
 			</div>
@@ -82,7 +59,7 @@
 					width: 100%;
 					height: 70vh;
 					object-fit: cover;
-					object-position: 0 30%;
+					object-position: center center;
 					border-radius: 2rem;
 					filter: saturate(1.5) brightness(0.8) blur(0.3px)
 						contrast(1.1);
@@ -107,7 +84,13 @@
 					"Suave",
 					"Sleek",
 				];
-				const texts2 = ["Elegance", "Trend", "Style", "Suave"];
+				const texts2 = [
+					"Elegance",
+					"Trend",
+					"Suave",
+					"Look",
+					"Personality",
+				];
 				const text = document.querySelector(".carousel-text");
 				const text2 = document.querySelector(".rolling-text");
 				let currentIndex = 0;
@@ -198,44 +181,25 @@
 		</section>
 		<br />
 		<div style="display: flex; justify-content: center">
-			<button
-				style="
-					height: 2rem;
-					width: 4rem;
-					background-color: black;
-					color: whitesmoke;
-					border: 1px solid gray;
-					border-radius: 1rem;
-				"
-			>
-				Shop
-			</button>
+			<a title="shop" href="/shop">
+				<button
+					style="
+						cursor: pointer;
+						height: 2rem;
+						width: 4rem;
+						background-color: black;
+						color: whitesmoke;
+						border: 1px solid gray;
+						border-radius: 1rem;
+					"
+				>
+					Shop
+				</button>
+			</a>
 		</div>
 		<br />
 		<!-- -------------------------------------------------- -->
 		<section>
-			<style>
-				.fa-brands {
-					animation: anime 5s ease infinite;
-				}
-				@keyframes anime {
-					0% {
-						color: black;
-					}
-					25% {
-						color: red;
-					}
-					50% {
-						color: green;
-					}
-					75% {
-						color: blue;
-					}
-					100% {
-						color: black;
-					}
-				}
-			</style>
 			<div>
 				<p style="text-align: center; font-size: 2rem">More about us</p>
 				<p style="margin: auto; text-align: center; width: 50%">
