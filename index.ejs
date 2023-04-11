@@ -12,9 +12,13 @@
 		<style>
 			@media (max-width: 768px) {
 				.discover-define {
-					font-size: 3rem !important;
+					display: none;
+				}
+				.carousel-text {
+					display: block !important;
 				}
 			}
+
 			.discover-define {
 				position: absolute;
 				transform: translate(-50%, 0);
@@ -24,6 +28,23 @@
 				color: white;
 				white-space: nowrap;
 				z-index: 1;
+			}
+			.carousel-text {
+				transition: opacity 0.5s ease-in-out;
+				display: none;
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+				text-align: center;
+				font-size: 5rem;
+				font-weight: 500;
+				color: white;
+				white-space: nowrap;
+				z-index: 1;
+			}
+			.rolling-text {
+				color: violet;
 			}
 		</style>
 	</head>
@@ -71,10 +92,43 @@
 			/>
 			<p class="discover-define" style="left: 50%; top: 10%">
 				Discover Your Style
+				<br />
+
+				<br />
+				Define Your <span class="rolling-text">Chic</span>
 			</p>
-			<p class="discover-define" style="top: 40%; left: 50%">
-				Define Your Chic
-			</p>
+			<span class="carousel-text">Elegance</span>
+			<script>
+				const texts = [
+					"Chic",
+					"Trendy",
+					"Stylish",
+					"Modern",
+					"Suave",
+					"Sleek",
+				];
+				const texts2 = ["Elegance", "Trend", "Style", "Suave"];
+				const text = document.querySelector(".carousel-text");
+				const text2 = document.querySelector(".rolling-text");
+				let currentIndex = 0;
+				let i = 0;
+				setInterval(() => {
+					text.style.opacity = 0;
+					setTimeout(() => {
+						text.innerText = texts[currentIndex];
+						text.style.opacity = 1;
+						currentIndex = (currentIndex + 1) % texts.length;
+					}, 500);
+				}, 2500);
+				setInterval(() => {
+					text2.style.opacity = 0;
+					setTimeout(() => {
+						text2.innerText = texts2[i];
+						text2.style.opacity = 1;
+						i = (i + 1) % texts2.length;
+					}, 500);
+				}, 2700);
+			</script>
 		</section>
 		<br />
 
