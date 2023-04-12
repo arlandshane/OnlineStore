@@ -88,12 +88,22 @@ app.get("/contact", (req, res) => {
 	});
 });
 
-app.post("/products", async (req, res) => {
+app.get("/addProduct", (req, res) => {
+	ejs.renderFile(path.join(__dirname, "addProduct.ejs"), {}, (err, html) => {
+		if (err) {
+			console.error(`Error rendering template: ${err}`);
+			res.status(500).send("Error rendering template");
+		} else {
+			res.send(html);
+		}
+	});
+});
+
+app.post("/addProduct", async (req, res) => {
 	try {
-		const { name, image, price, description } = req.body;
-		const addProduct = new Product({ name, image, price, description });
+		const addProduct = new Product(req.body);
 		await addProduct.save();
-		res.send("Product added successfully");
+		res.status(201).redirect("/shop");
 	} catch (error) {
 		console.log(error);
 		res.status(500).send("Error adding product");

@@ -21,7 +21,14 @@
 						Store
 					</div>
 				</a>
-
+				<a
+					title="Add Product"
+					style="align-self: center"
+					class="link"
+					href="/addProduct"
+				>
+					Add
+				</a>
 				<a
 					title="about"
 					style="align-self: center"
@@ -48,82 +55,31 @@
 			</span>
 		</nav>
 		<section id="shop-img-section">
-			<div>
+			<% products.forEach((product) => { %>
+			<div style="display: flex; flex-direction: column">
 				<img
-					id="overlay2"
+					style="margin: auto"
 					loading="lazy"
 					class="product-img"
-					src="https://lh3.googleusercontent.com/pw/AJFCJaXEu-vgs6KTTTW9E6SMK2h6jl59rw8zcEiQCG6ebq16Y90ZGYsc6P4W7Ng8jFUqd3N5ZTmFAP-fls4YR3MIxFeWByx_hXUa86YAcvWMiOwWJKypIrqfjYHm0MYqBjRwDs0N1C710Brz4Hm8DB766CPqdQ=w535-h950-s-no?authuser=0"
+					src="<%= product.image %>"
 					alt=""
 				/>
-				<div style="text-align: center">
-					<span>Red and Gold Tshirt</span>
-					<br />
-					<span>₹399 (M)</span>
-				</div>
+				<p style="text-align: center; margin-bottom: 0">
+					<%= product.name %>
+				</p>
+				<p style="text-align: center; margin-bottom: 0">
+					Rs. <%= product.price %>/- <% if(product.originalPrice) { %>
+					<span style="text-decoration: line-through">
+						Rs. <%= product.originalPrice %>
+					</span>
+					<% } %>
+				</p>
+				<p style="text-align: center; margin-bottom: 0">
+					<%= product.description %>
+				</p>
 			</div>
-			<div>
-				<img
-					loading="lazy"
-					class="product-img"
-					src="https://lh3.googleusercontent.com/pw/AJFCJaUz1Jn28hYh2WrtlQo4aXKA47Psp9CXDBiETokGl5dcZuLBTB_R3twUIz0UgE6-Cu5eTheFeRY08sbO7fAOOIFKSp02fdqZMC4PYTmzrrhlCFOf6LB6EVDG04hqk-QcQJnXdFdqgzZehgj4-KzS7r_MZQ=w535-h950-s-no?authuser=0"
-					alt=""
-				/>
-				<div style="text-align: center">
-					<span>Jack and Jones Black Tshirt</span>
-					<br />
-					<span>₹499 (M)</span>
-				</div>
-			</div>
-			<div>
-				<img
-					loading="lazy"
-					class="product-img"
-					src="https://lh3.googleusercontent.com/pw/AJFCJaWEycJk0R4RCMpj9zX77dxYG60upE2zh7ZFH13F8iNMdTQFcYQKMHKXZm5DR0AVsKO4qcPrHSsfbgvRSO3EnqYjiE-5EqMc_H7ZFwcAutg65s8nIFyobPNbNaF9uZjO6HP8oPiYITeTb4Ink1vTKZhk4g=w535-h950-s-no?authuser=0"
-					alt=""
-				/>
-				<div style="text-align: center">
-					<span>Red and Gold Tshirt</span>
-					<br />
-					<span>₹399 (L)</span>
-				</div>
-			</div>
-			<div>
-				<img
-					id="overlay1"
-					loading="lazy"
-					class="product-img"
-					src="https://lh3.googleusercontent.com/pw/AJFCJaWFcIY27Nc0BwKVAP_CQjhTOMRnHEZK4yeqyNET2jjQvCp2yFnp2bkpi6Ac7vI-H0RUyF95lC8AEBA8bFdVYovmejdpU8lMNm3cs3X-nS5hmfa0UCFJn-ih_ar8fdYOmbEKrRevYCNFgrvhsU93wQcD8Q=w535-h950-s-k-no?authuser=0"
-					alt=""
-				/>
-				<div style="text-align: center">
-					<span>Demon Slayer Black Tshirt</span>
-					<br />
-					<span>₹399 (Oversize)</span>
-				</div>
-			</div>
-			<!--  -->
+			<% }) %>
 		</section>
-		<script>
-			const overlay1 = document.getElementById("overlay1");
-			const overlay2 = document.getElementById("overlay2");
-
-			overlay1.addEventListener("mouseenter", () => {
-				overlay1.src =
-					"https://lh3.googleusercontent.com/pw/AJFCJaUk8h5do448sOlNkMdG3Ra-OHjY1zcgL8KrTX4lKrmfD--8C8fEvdOLPSXK4kPgUTA5w8nnaxMHhBO3GEFBK2wQcYZmeWYT3x8v4X_LqV4slLvzTJLAZV9utewACp5A2hhtc_YIspSwkdRJ6LlqcWUfOw=w535-h950-s-no?authuser=0";
-			});
-			overlay1.addEventListener("mouseleave", () => {
-				overlay1.src =
-					"https://lh3.googleusercontent.com/pw/AJFCJaWFcIY27Nc0BwKVAP_CQjhTOMRnHEZK4yeqyNET2jjQvCp2yFnp2bkpi6Ac7vI-H0RUyF95lC8AEBA8bFdVYovmejdpU8lMNm3cs3X-nS5hmfa0UCFJn-ih_ar8fdYOmbEKrRevYCNFgrvhsU93wQcD8Q=w535-h950-s-k-no?authuser=0";
-			});
-			overlay2.addEventListener("mouseenter", () => {
-				overlay2.src =
-					"https://lh3.googleusercontent.com/pw/AJFCJaURN18D2hOz3y48JLuS3Eq17WJcMpBlbcQYU8gDvvwaV7XwJ_L9OgCmCr3TkEt2vcEJF-Z_vecR7klTogT8d3Naszk532ZQc513df-D6U56RqWMVjVpWLvTJod2tywkHtlpN77Ri22-lbET5EhID4N59A=w535-h950-s-no?authuser=0";
-			});
-			overlay2.addEventListener("mouseleave", () => {
-				overlay2.src =
-					"https://lh3.googleusercontent.com/pw/AJFCJaXEu-vgs6KTTTW9E6SMK2h6jl59rw8zcEiQCG6ebq16Y90ZGYsc6P4W7Ng8jFUqd3N5ZTmFAP-fls4YR3MIxFeWByx_hXUa86YAcvWMiOwWJKypIrqfjYHm0MYqBjRwDs0N1C710Brz4Hm8DB766CPqdQ=w535-h950-s-no?authuser=0";
-			});
-		</script>
 	</body>
 </html>
+<!-- add size field -->

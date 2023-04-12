@@ -75,54 +75,43 @@
 				Define Your <span class="rolling-text">Chic</span>
 			</p>
 			<span class="carousel-text">Elegance</span>
-			<script>
-				const texts = [
-					"Chic",
-					"Trendy",
-					"Stylish",
-					"Modern",
-					"Suave",
-					"Sleek",
-				];
-				const texts2 = [
-					"Elegance",
-					"Trend",
-					"Suave",
-					"Look",
-					"Personality",
-				];
-				const text = document.querySelector(".carousel-text");
-				const text2 = document.querySelector(".rolling-text");
-				let currentIndex = 0;
-				let i = 0;
-				setInterval(() => {
-					text.style.opacity = 0;
-					setTimeout(() => {
-						text.innerText = texts[currentIndex];
-						text.style.opacity = 1;
-						currentIndex = (currentIndex + 1) % texts.length;
-					}, 500);
-				}, 2500);
-				setInterval(() => {
-					text2.style.opacity = 0;
-					setTimeout(() => {
-						text2.innerText = texts2[i];
-						text2.style.opacity = 1;
-						i = (i + 1) % texts2.length;
-					}, 500);
-				}, 2700);
-			</script>
 		</section>
+		<div
+			style="
+				display: flex;
+				flex-direction: row;
+				justify-content: space-evenly;
+			"
+		>
+			<div>Lowest Prices</div>
+			<div>Easy Returns</div>
+			<div>Best Quality</div>
+		</div>
+		<hr style="width: 60%" />
 		<br />
 
+		<h2 style="text-align: center">
+			<a
+				style="
+					border: 1px solid salmon;
+					padding: 0.2rem 0.5rem;
+					border-radius: 0.5rem;
+				"
+				class="link"
+				href="/addProduct"
+			>
+				Add Product
+			</a>
+		</h2>
+
 		<!-- -------------------------------------------------- -->
-		<p style="text-align: center; font-size: 2rem">Featured Products</p>
+		<p style="text-align: center; font-size: 2rem">Featured Categories</p>
 		<section class="images">
 			<div>
 				<img
 					loading="lazy"
 					class="featured"
-					src="https://lh3.googleusercontent.com/pw/AJFCJaXc27deKeIZDNgXmZsYhSN-bsDGJyNJmW6Ji_FUCTTSPt76uurx_LZmkons2TKpzFS8acYlpm90K0pTnl8G7qTnLC0wS6yAfLOjV4u9l5kWe7jSY_PTDrw7FfP3gieL4I7tVflDHhBCuNg-iE192Rm8JQ=w713-h950-s-no?authuser=0"
+					src="https://res.cloudinary.com/dqw6wn7h9/image/upload/v1681242461/IMG-20211202-WA0022_pugclf.jpg"
 					alt=""
 				/>
 				<p
@@ -132,7 +121,7 @@
 						font-size: 1.1rem;
 					"
 				>
-					Glasses
+					Tshirts
 				</p>
 				<p style="margin: 0; text-align: center; font-size: 0.8rem">
 					starting @ ₹249
@@ -142,7 +131,7 @@
 				<img
 					loading="lazy"
 					class="featured"
-					src="https://lh3.googleusercontent.com/pw/AMWts8Awg82_MijYT7ZKNteX339O0YDKvFLMyxEDZvUN0mZg0cSjGf8E9_NZdTD2lDHGPTjceP7fbVIUQhrLpDTwipVJzWeXNYdNJY_OsBbO_4FNpqLUtZDknaXihKpsFhVJQVna5lbUXI1XRkeglo3h8DJruA=w713-h950-s-no?authuser=0"
+					src="https://res.cloudinary.com/dqw6wn7h9/image/upload/v1681242478/PXL_20220520_052557992_ifw1pl.jpg"
 					alt=""
 				/>
 				<p
@@ -162,7 +151,7 @@
 				<img
 					loading="lazy"
 					class="featured"
-					src="https://lh3.googleusercontent.com/pw/AJFCJaXYXQY5XpxiTSwqhmKcLB8xujLm4Irdk6qQW_ZENcauVec9_hWCnaZ1X713uxzcCx-V3xNeMsVP6_2YOqAMBvMjLRGTaTGXgZbohZfOkBSxYrrI_ezRaq3F-15Itkzd5JSPAmdtT_7BRNGLn6ZyjxPqrw=w743-h950-s-no?authuser=0"
+					src="https://res.cloudinary.com/dqw6wn7h9/image/upload/v1681242501/CausalMask2_rbucre.jpg"
 					alt=""
 				/>
 				<p
@@ -172,7 +161,7 @@
 						font-size: 1.1rem;
 					"
 				>
-					Masks
+					Free Delivery
 				</p>
 				<p style="margin: 0; text-align: center; font-size: 0.8rem">
 					starting @ ₹149
@@ -244,5 +233,42 @@
 			</div>
 		</section>
 		<!-- -------------------------------------------------- -->
+		<script>
+			const texts = [
+				"Chic",
+				"Trendy",
+				"Stylish",
+				"Modern",
+				"Suave",
+				"Sleek",
+			];
+			const texts2 = [
+				"Elegance",
+				"Trend",
+				"Suave",
+				"Look",
+				"Personality",
+			];
+			const text = document.querySelector(".carousel-text");
+			const text2 = document.querySelector(".rolling-text");
+			let currentIndex = 0;
+			let i = 0;
+			setInterval(() => {
+				text.style.opacity = 0;
+				setTimeout(() => {
+					text.innerText = texts[currentIndex];
+					text.style.opacity = 1;
+					currentIndex = (currentIndex + 1) % texts.length;
+				}, 500);
+			}, 2500);
+			setInterval(() => {
+				text2.style.opacity = 0;
+				setTimeout(() => {
+					text2.innerText = texts2[i];
+					text2.style.opacity = 1;
+					i = (i + 1) % texts2.length;
+				}, 500);
+			}, 2700);
+		</script>
 	</body>
 </html>

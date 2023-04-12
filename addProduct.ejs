@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Add Product</title>
+		<link rel="stylesheet" href="/css/style.css" />
+		<style>
+			input {
+				height: 2rem;
+				border: 1px solid gray;
+				border-radius: 0.5rem;
+				padding-left: 0.5rem;
+			}
+			button {
+				height: 2rem;
+				background-color: white;
+				border: 1px solid gray;
+				border-radius: 0.5rem;
+			}
+			button:hover {
+				background-color: rgba(0, 200, 0, 0.3);
+			}
+		</style>
+	</head>
+	<body>
+		<nav class="nav">
+			<div class="nav-links-div">
+				<h1>Enter Product Details</h1>
+				<a
+					title="Shop"
+					style="align-self: center"
+					class="link"
+					href="/shop"
+				>
+					Shop
+				</a>
+				<a title="Home" style="align-self: center" class="link" href="/"
+					>Home</a
+				>
+			</div>
+		</nav>
+
+		<form
+			style="display: flex; flex-direction: column; row-gap: 1rem"
+			action="/addProduct"
+			method="post"
+		>
+			<div>
+				<label for="adderName">*Your Name: </label>
+				<input
+					type="text"
+					name="adderName"
+					placeholder="Elon Musk"
+					required
+				/>
+			</div>
+			<div>
+				<label for="name">*Product Name: </label>
+				<input
+					type="text"
+					name="name"
+					placeholder="Black Tshirt"
+					required
+				/>
+			</div>
+			<div>
+				<label for="price">*Product Price: (₹) </label>
+				<input type="number" name="price" placeholder="499" required />
+			</div>
+			<div>
+				<label for="originalPrice">Original Price: (₹) </label>
+				<input type="text" name="originalPrice" placeholder="699" />
+			</div>
+			<div>
+				<label for="image">Product Image Link: </label>
+				<input type="url" name="image" placeholder="https://" />
+			</div>
+			<div>
+				<label for="description">Product Description: </label>
+				<input
+					type="text"
+					name="description"
+					placeholder="Red, Shirt, Cotton"
+				/>
+			</div>
+			<div>
+				<label for="category">Product Category: </label>
+				<input type="text" name="category" placeholder="Shirt/Tshirt" />
+			</div>
+			<div>
+				<button type="submit">Submit</button>
+			</div>
+		</form>
+	</body>
+</html>
