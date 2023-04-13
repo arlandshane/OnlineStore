@@ -13,13 +13,48 @@ const productSchema = new mongoose.Schema({
 		type: Number,
 		required: true,
 	},
-	originalPrice: Number,
-	image: String,
-	description: String,
-	category: String,
+	image: {
+		type: String,
+		required: true,
+	},
+	description: {
+		type: String,
+		required: true,
+	},
+	originalPrice: {
+		type: Number,
+		required: true,
+	},
+	category:{
+		type: String,
+		required: true,
+	},
+	primaryColor: String,
+	secondaryColor: String,
 	date: {
 		type: Date,
 		default: Date.now,
+	},
+	// quantity: Number,
+	// brand: String,
+	// size: String,
+	// material: String,
+	// rating: Number,
+	reviews: [
+		{
+			title: String,
+			body: String,
+			rating: Number,
+		},
+	],
+	tags: [String],
+	shippingInfo: {
+		weight: Number,
+		dimensions: {
+			length: Number,
+			width: Number,
+			height: Number,
+		},
 	},
 });
 

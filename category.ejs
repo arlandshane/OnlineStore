@@ -3,12 +3,8 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Shop</title>
+		<title>Product Category</title>
 		<link rel="stylesheet" href="/css/style.css" />
-		<script
-			src="https://kit.fontawesome.com/cd9e976117.js"
-			crossorigin="anonymous"
-		></script>
 	</head>
 	<body>
 		<nav id="nav">
@@ -21,30 +17,6 @@
 						Store
 					</div>
 				</a>
-				<a
-					title="Add Product"
-					style="align-self: center"
-					class="link"
-					href="/addProduct"
-				>
-					Add
-				</a>
-				<a
-					title="about"
-					style="align-self: center"
-					class="link"
-					href="/about"
-				>
-					<span>About</span>
-				</a>
-				<a
-					title="contact"
-					style="align-self: center"
-					class="link"
-					href="/contact"
-				>
-					<span>Contact</span>
-				</a>
 			</div>
 
 			<span style="align-self: center">
@@ -54,8 +26,11 @@
 				0
 			</span>
 		</nav>
+
 		<section id="shop-img-section">
-			<% products.forEach((product) => { %>
+			<% if (products.length === 0) { %>
+			<p style="text-align: center">No products in this category</p>
+			<% } else { %> <% products.forEach((product) => { %>
 			<div style="display: flex; flex-direction: column">
 				<img
 					style="margin: auto"
@@ -82,8 +57,7 @@
 					<%= product.category %>
 				</p>
 			</div>
-			<% }) %>
+			<% }) %> <% } %>
 		</section>
 	</body>
 </html>
-<!-- add size field -->

@@ -12,37 +12,16 @@
 	</head>
 	<body>
 		<nav id="nav">
-			<div class="nav-links-div">
-				<div
-					style="font-size: 2rem; font-weight: 500; margin: 0"
-					class="paragraph"
-				>
-					Store
-				</div>
-				<a
-					title="shop"
-					style="align-self: center"
-					class="link"
-					href="/shop"
-				>
-					<span>Shop</span>
-				</a>
-				<a
-					title="about"
-					style="align-self: center"
-					class="link"
-					href="/about"
-				>
-					<span>About</span>
-				</a>
-				<a
-					title="contact"
-					style="align-self: center"
-					class="link"
-					href="/contact"
-				>
-					<span>Contact</span>
-				</a>
+			<div
+				style="
+					font-size: 2rem;
+					font-weight: 500;
+					margin: 0;
+					align-self: center;
+				"
+				class="paragraph"
+			>
+				Store
 			</div>
 
 			<span style="align-self: center">
@@ -54,19 +33,7 @@
 		</nav>
 		<!-- -------------------------------------------------- -->
 		<section id="images-section" style="position: relative">
-			<img
-				style="
-					width: 100%;
-					height: 70vh;
-					object-fit: cover;
-					object-position: center center;
-					border-radius: 2rem;
-					filter: saturate(1.5) brightness(0.8) blur(0.3px)
-						contrast(1.1);
-				"
-				src="/images/shirts.jpg"
-				alt=""
-			/>
+			<img id="landing-image" src="/images/shirts.jpg" alt="" />
 			<p class="discover-define" style="left: 50%; top: 10%">
 				Discover Your Style
 				<br />
@@ -90,7 +57,7 @@
 		<hr style="width: 60%" />
 		<br />
 
-		<h2 style="text-align: center">
+		<!-- <h2 style="text-align: center">
 			<a
 				style="
 					border: 1px solid salmon;
@@ -102,16 +69,17 @@
 			>
 				Add Product
 			</a>
-		</h2>
+		</h2> -->
 
 		<!-- -------------------------------------------------- -->
 		<p style="text-align: center; font-size: 2rem">Featured Categories</p>
 		<section class="images">
-			<div>
+			<div id="goto-tshirts" class="goto">
 				<img
+					id="tshirt-image"
+					src="/images/tshirtFeatured.jpg"
 					loading="lazy"
 					class="featured"
-					src="https://res.cloudinary.com/dqw6wn7h9/image/upload/v1681242461/IMG-20211202-WA0022_pugclf.jpg"
 					alt=""
 				/>
 				<p
@@ -127,11 +95,12 @@
 					starting @ ₹249
 				</p>
 			</div>
-			<div>
+			<div id="goto-shirts" class="goto">
 				<img
+					id="shirt-image"
+					src="/images/shirtFeatured.jpg"
 					loading="lazy"
 					class="featured"
-					src="https://res.cloudinary.com/dqw6wn7h9/image/upload/v1681242478/PXL_20220520_052557992_ifw1pl.jpg"
 					alt=""
 				/>
 				<p
@@ -147,11 +116,11 @@
 					starting @ ₹599
 				</p>
 			</div>
-			<div>
+			<div id="goto-free-delivery" class="goto">
 				<img
 					loading="lazy"
 					class="featured"
-					src="https://res.cloudinary.com/dqw6wn7h9/image/upload/v1681242501/CausalMask2_rbucre.jpg"
+					src="/images/curatedFeatured.jpg"
 					alt=""
 				/>
 				<p
@@ -161,42 +130,97 @@
 						font-size: 1.1rem;
 					"
 				>
-					Free Delivery
+					Curated
 				</p>
 				<p style="margin: 0; text-align: center; font-size: 0.8rem">
-					starting @ ₹149
+					Best Handpicked Products
 				</p>
 			</div>
+			<style>
+				.goto {
+					cursor: pointer;
+					transition-duration: 250ms;
+				}
+				.goto:hover {
+					transform: scale(1.025);
+				}
+			</style>
+			<script>
+				document
+					.getElementById("goto-tshirts")
+					.addEventListener("click", () => {
+						window.open("/shop/tshirts", "_blank");
+					});
+				document
+					.getElementById("goto-shirts")
+					.addEventListener("click", () => {
+						window.open("/shop/shirts", "_blank");
+					});
+				document
+					.getElementById("goto-free-delivery")
+					.addEventListener("click", () => {
+						window.open("/shop/free-delivery", "_blank");
+					});
+				const tshirtImageSources = [
+					"/images/tshirtFeatured.jpg",
+					"/images/tshirtFeatured2.jpg",
+				];
+				const shirtImageSources = [
+					"/images/shirtFeatured.jpg",
+					"/images/shirtFeatured2.jpg",
+				];
+				let currentTshirtImageIndex = 0;
+				let currentShirtImageIndex = 0;
+				function updateTshirtImageSource() {
+					const tshirtImageElement =
+						document.getElementById("tshirt-image");
+					if (tshirtImageElement) {
+						tshirtImageElement.src =
+							tshirtImageSources[currentTshirtImageIndex];
+						currentTshirtImageIndex =
+							(currentTshirtImageIndex + 1) %
+							tshirtImageSources.length;
+					}
+				}
+				function updateShirtImageSource() {
+					const shirtImageElement =
+						document.getElementById("shirt-image");
+					if (shirtImageElement) {
+						shirtImageElement.src =
+							shirtImageSources[currentShirtImageIndex];
+						currentShirtImageIndex =
+							(currentShirtImageIndex + 1) %
+							shirtImageSources.length;
+					}
+				}
+				function alternateImageSources() {
+					updateTshirtImageSource();
+					setTimeout(() => updateShirtImageSource(), 1500);
+				}
+				alternateImageSources();
+				setInterval(alternateImageSources, 4500);
+			</script>
 		</section>
 		<br />
 		<div style="display: flex; justify-content: center">
 			<a title="shop" href="/shop">
-				<button
-					style="
-						cursor: pointer;
-						height: 2rem;
-						width: 4rem;
-						background-color: black;
-						color: whitesmoke;
-						border: 1px solid gray;
-						border-radius: 1rem;
-					"
-				>
-					Shop
-				</button>
+				<button class="black-btn">Shop</button>
 			</a>
 		</div>
 		<br />
 		<!-- -------------------------------------------------- -->
 		<section>
 			<div>
-				<p style="text-align: center; font-size: 2rem">More about us</p>
-				<p style="margin: auto; text-align: center; width: 50%">
-					Tell people about who you are, your origin, your process, or
-					your inspirations. Tap into your creativity. You've got
-					this. The way you tell your story online can make all the
-					difference. Don't worry about sounding professional. Sound
-					like you.
+				<p style="text-align: center; font-size: 2rem">About us</p>
+				<p style="margin: auto; width: 40%">
+					Welcome to our online retail store, where we offer a
+					carefully curated collection of premium shirts and t-shirts
+					for fashion-conscious individuals. We believe that style
+					shouldn't come at a high cost, which is why we offer
+					unbeatable prices on high-quality products. Embrace
+					exceptional style without breaking the bank, and never
+					settle for mediocrity. Read more about us
+					<span><a href="/about">here</a></span>
 				</p>
 			</div>
 			<hr style="width: 50%; margin-top: 2rem; margin-bottom: 2rem" />
@@ -235,6 +259,7 @@
 		<!-- -------------------------------------------------- -->
 		<script>
 			const texts = [
+				"Elegance",
 				"Chic",
 				"Trendy",
 				"Stylish",
@@ -243,6 +268,7 @@
 				"Sleek",
 			];
 			const texts2 = [
+				"Chic",
 				"Elegance",
 				"Trend",
 				"Suave",
@@ -251,8 +277,8 @@
 			];
 			const text = document.querySelector(".carousel-text");
 			const text2 = document.querySelector(".rolling-text");
-			let currentIndex = 0;
-			let i = 0;
+			let currentIndex = 1;
+			let i = 1;
 			setInterval(() => {
 				text.style.opacity = 0;
 				setTimeout(() => {

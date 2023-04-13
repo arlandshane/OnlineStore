@@ -41,8 +41,29 @@ app.get("/", (req, res) => {
 			}
 		});
 	} catch (error) {
-		console.error(`Failed to fetch products: ${error}`);
-		res.status(500).send("Error fetching products");
+		console.log(error);
+	}
+});
+
+app.get("/addProduct", (req, res) => {
+	ejs.renderFile(path.join(__dirname, "addProduct.ejs"), {}, (err, html) => {
+		if (err) {
+			console.error(`Error rendering template: ${err}`);
+			res.status(500).send("Error rendering template");
+		} else {
+			res.send(html);
+		}
+	});
+});
+
+app.post("/addProduct", async (req, res) => {
+	try {
+		const addProduct = new Product(req.body);
+		await addProduct.save();
+		res.status(201).redirect("/shop");
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error adding product");
 	}
 });
 
@@ -66,47 +87,27 @@ app.get("/shop", async (req, res) => {
 	}
 });
 
-app.get("/about", (req, res) => {
-	ejs.renderFile(path.join(__dirname, "about.ejs"), {}, (err, html) => {
-		if (err) {
-			console.error(`Error rendering template: ${err}`);
-			res.status(500).send("Error rendering template");
-		} else {
-			res.send(html);
-		}
-	});
-});
-
-app.get("/contact", (req, res) => {
-	ejs.renderFile(path.join(__dirname, "contact.ejs"), {}, (err, html) => {
-		if (err) {
-			console.error(`Error rendering template: ${err}`);
-			res.status(500).send("Error rendering template");
-		} else {
-			res.send(html);
-		}
-	});
-});
-
-app.get("/addProduct", (req, res) => {
-	ejs.renderFile(path.join(__dirname, "addProduct.ejs"), {}, (err, html) => {
-		if (err) {
-			console.error(`Error rendering template: ${err}`);
-			res.status(500).send("Error rendering template");
-		} else {
-			res.send(html);
-		}
-	});
-});
-
-app.post("/addProduct", async (req, res) => {
+app.get("/shop/:productType", async (req, res) => {
 	try {
-		const addProduct = new Product(req.body);
-		await addProduct.save();
-		res.status(201).redirect("/shop");
+		const productType = req.params.productType.toLowerCase();
+		const products = await Product.find({
+			category: { $regex: new RegExp(`\\b${productType}\\b`, "i") },
+		});
+		ejs.renderFile(
+			path.join(__dirname, "category.ejs"),
+			{ products },
+			(err, html) => {
+				if (err) {
+					console.error(`Error rendering template: ${err}`);
+					res.status(500).send("Error rendering template");
+				} else {
+					res.send(html);
+				}
+			}
+		);
 	} catch (error) {
-		console.log(error);
-		res.status(500).send("Error adding product");
+		console.error(`Error: ${error}`);
+		res.status(500).send("Error processing request");
 	}
 });
 
