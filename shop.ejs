@@ -22,7 +22,7 @@
 				class="link"
 				href="/"
 			>
-				<div>Store</div>
+				<div style="color: #393e46">Store</div>
 			</a>
 			<div style="align-self: center">
 				<a href="/addProduct"
@@ -40,7 +40,7 @@
 		<p style="font-weight: 500; margin: 1rem">/shop</p>
 
 		<section id="shop-img-section">
-			<% products.forEach((product) => { %>
+			<% products.reverse().forEach((product) => { %>
 			<div style="display: flex; flex-direction: column">
 				<img
 					style="margin: auto"

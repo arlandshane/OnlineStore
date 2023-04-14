@@ -22,7 +22,7 @@
 				class="link"
 				href="/"
 			>
-				<div>Store</div>
+				<div style="color: #393e46">Store</div>
 			</a>
 
 			<span style="align-self: center">
@@ -32,8 +32,8 @@
 				0
 			</span>
 		</nav>
-		<p style="font-weight: 500">/shop/<%= productType %>/</p>
-		<section>
+		<p style="font-weight: 500">Home / shop / <%= productType %> /</p>
+		<section style="display: flex; justify-content: space-evenly">
 			<div>
 				<img
 					style="width: 20rem; border-radius: 0.5rem"
@@ -41,7 +41,11 @@
 					alt=""
 				/>
 			</div>
-			<%= productDetails.name %>
+			<div>
+				<p style="font-size: 1.5rem; font-weight: 500; color: #393e46">
+					<%= productDetails.name %>
+				</p>
+			</div>
 		</section>
 	</body>
 </html>

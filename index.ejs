@@ -18,6 +18,7 @@
 					font-weight: 500;
 					margin: 0;
 					align-self: center;
+					color: #393e46;
 				"
 				class="paragraph"
 			>
@@ -159,7 +160,7 @@
 				document
 					.getElementById("goto-free-delivery")
 					.addEventListener("click", () => {
-						window.location.href = "/shop/free-delivery";
+						window.location.href = "/shop?curated=true";
 					});
 
 				const tshirtImageSources = [
@@ -212,7 +213,9 @@
 		<!-- -------------------------------------------------- -->
 		<section>
 			<div>
-				<p style="text-align: center; font-size: 2rem">About us</p>
+				<p style="text-align: center; font-size: 2rem; color: #393e46">
+					About us
+				</p>
 				<p style="margin: auto; width: 40%">
 					Welcome to our online retail store, where we offer a
 					carefully curated collection of premium shirts and t-shirts
@@ -229,6 +232,7 @@
 				style="
 					margin: auto;
 					text-align: center;
+					color: #393e46;
 					width: 50%;
 					font-size: 1.5rem;
 				"

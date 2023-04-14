@@ -83,7 +83,16 @@ app.post("/addProduct", async (req, res) => {
 
 app.get("/shop", async (req, res) => {
 	try {
-		const products = await Product.find();
+		const curated = req.query.curated;
+		let products;
+		if (curated !== undefined && curated !== null && curated !== "") {
+			products = await Product.find({
+				category: { $regex: "curated", $options: "i" },
+			});
+			console.log("no curated");
+		} else {
+			products = await Product.find();
+		}
 		ejs.renderFile(
 			path.join(__dirname, "shop.ejs"),
 			{ products },

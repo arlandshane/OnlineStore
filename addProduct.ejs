@@ -5,7 +5,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Add Product</title>
 		<link rel="stylesheet" href="/css/style.css" />
+		<script
+			src="https://kit.fontawesome.com/cd9e976117.js"
+			crossorigin="anonymous"
+		></script>
 		<style>
+			div:has(label) {
+				display: flex;
+				gap: 1rem;
+			}
+			label {
+				align-self: center;
+			}
 			input {
 				height: 2rem;
 				border: 1px solid gray;
@@ -24,25 +35,35 @@
 		</style>
 	</head>
 	<body>
-		<nav class="nav">
-			<div class="nav-links-div">
-				<h1>Enter Product Details</h1>
-				<a
-					title="Shop"
-					style="align-self: center"
-					class="link"
-					href="/shop"
-				>
-					Shop
-				</a>
-				<a title="Home" style="align-self: center" class="link" href="/"
-					>Home</a
-				>
-			</div>
-		</nav>
+		<nav id="nav">
+			<a
+				style="
+					font-size: 2rem;
+					font-weight: 500;
+					margin: 0;
+					align-self: center;
+				"
+				class="link"
+				href="/"
+			>
+				<div style="color: #393e46">Store</div>
+			</a>
 
+			<span style="align-self: center">
+				<i class="fa-solid fa-circle-user fa-xl"></i>
+				<span style="padding: 0 0.5rem"></span>
+				<i class="fa-solid fa-cart-shopping"></i>
+				0
+			</span>
+		</nav>
+		<h3 style="margin-left: 1rem">Enter Product Details</h3>
 		<form
-			style="display: flex; flex-direction: column; row-gap: 1rem"
+			style="
+				display: flex;
+				flex-direction: column;
+				row-gap: 1rem;
+				margin-left: 1rem;
+			"
 			action="/addProduct"
 			method="post"
 		>
