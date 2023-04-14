@@ -89,7 +89,6 @@ app.get("/shop", async (req, res) => {
 			products = await Product.find({
 				category: { $regex: "curated", $options: "i" },
 			});
-			console.log("no curated");
 		} else {
 			products = await Product.find();
 		}
