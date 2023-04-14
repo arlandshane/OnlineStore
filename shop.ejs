@@ -12,40 +12,18 @@
 	</head>
 	<body>
 		<nav id="nav">
-			<div class="nav-links-div">
-				<a class="link" href="/">
-					<div
-						style="font-size: 2rem; font-weight: 500; margin: 0"
-						class="paragraph"
-					>
-						Store
-					</div>
-				</a>
-				<a
-					title="Add Product"
-					style="align-self: center"
-					class="link"
-					href="/addProduct"
-				>
-					Add
-				</a>
-				<a
-					title="about"
-					style="align-self: center"
-					class="link"
-					href="/about"
-				>
-					<span>About</span>
-				</a>
-				<a
-					title="contact"
-					style="align-self: center"
-					class="link"
-					href="/contact"
-				>
-					<span>Contact</span>
-				</a>
-			</div>
+			<a
+				style="
+					font-size: 2rem;
+					font-weight: 500;
+					margin: 0;
+					align-self: center;
+				"
+				class="link"
+				href="/"
+			>
+				<div>Store</div>
+			</a>
 
 			<span style="align-self: center">
 				<i class="fa-solid fa-circle-user fa-xl"></i>
@@ -54,6 +32,7 @@
 				0
 			</span>
 		</nav>
+		<p style="font-weight: 500; margin: 1rem">/shop</p>
 		<section id="shop-img-section">
 			<% products.forEach((product) => { %>
 			<div style="display: flex; flex-direction: column">

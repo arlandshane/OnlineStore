@@ -149,18 +149,19 @@
 				document
 					.getElementById("goto-tshirts")
 					.addEventListener("click", () => {
-						window.open("/shop/tshirts", "_blank");
+						window.location.href = "/shop/tshirts";
 					});
 				document
 					.getElementById("goto-shirts")
 					.addEventListener("click", () => {
-						window.open("/shop/shirts", "_blank");
+						window.location.href = "/shop/shirts";
 					});
 				document
 					.getElementById("goto-free-delivery")
 					.addEventListener("click", () => {
-						window.open("/shop/free-delivery", "_blank");
+						window.location.href = "/shop/free-delivery";
 					});
+
 				const tshirtImageSources = [
 					"/images/tshirtFeatured.jpg",
 					"/images/tshirtFeatured2.jpg",

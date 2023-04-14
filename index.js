@@ -91,11 +91,16 @@ app.get("/shop/:productType", async (req, res) => {
 	try {
 		const productType = req.params.productType.toLowerCase();
 		const products = await Product.find({
-			category: { $regex: new RegExp(`\\b${productType}\\b`, "i") },
+			category: {
+				$regex: new RegExp(
+					`\\b${productType.replace(/s$/, "")}\\b`,
+					"i"
+				),
+			},
 		});
 		ejs.renderFile(
 			path.join(__dirname, "category.ejs"),
-			{ products },
+			{ products, productType },
 			(err, html) => {
 				if (err) {
 					console.error(`Error rendering template: ${err}`);
