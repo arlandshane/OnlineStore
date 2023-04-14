@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title><%= productDetails.name %></title>
+		<link rel="stylesheet" href="/css/style.css" />
+		<script
+			src="https://kit.fontawesome.com/cd9e976117.js"
+			crossorigin="anonymous"
+		></script>
+	</head>
+	<body>
+		<nav id="nav">
+			<a
+				style="
+					font-size: 2rem;
+					font-weight: 500;
+					margin: 0;
+					align-self: center;
+				"
+				class="link"
+				href="/"
+			>
+				<div>Store</div>
+			</a>
+
+			<span style="align-self: center">
+				<i class="fa-solid fa-circle-user fa-xl"></i>
+				<span style="padding: 0 0.5rem"></span>
+				<i class="fa-solid fa-cart-shopping"></i>
+				0
+			</span>
+		</nav>
+		<p style="font-weight: 500">/shop/<%= productType %>/</p>
+		<section>
+			<div>
+				<img
+					style="width: 20rem; border-radius: 0.5rem"
+					src="<%= productDetails.image %>"
+					alt=""
+				/>
+			</div>
+			<%= productDetails.name %>
+		</section>
+	</body>
+</html>

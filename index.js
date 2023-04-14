@@ -1,34 +1,48 @@
 require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
-const port = process.env.PORT || 3000;
 const ejs = require("ejs");
 const path = require("path");
 const mongoose = require("mongoose");
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
 const Product = require("./models/product");
 
 const app = express();
+const port = process.env.PORT || 3000;
+
+mongoose.set("strictQuery", false);
+mongoose.set("strictPopulate", false);
+const connectDB = async () => {
+	try {
+		const conn = await mongoose.connect(process.env.MONGO_URI);
+		console.log(`MongoDB Connnected: ${conn.connection.host}`);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
+const store = new MongoDBStore({
+	uri: process.env.MONGO_URI,
+	collection: "sessions",
+	expires: 1000 * 60 * 60 * 24 * 7,
+});
 
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
-
-mongoose.set("strictQuery", false);
-mongoose.set("strictPopulate", false);
-
-const connectDB = async () => {
-	try {
-		const conn = await mongoose.connect(process.env.MONGO_URI, {
-			useNewUrlParser: true,
-			useUnifiedTopology: true,
-		});
-		console.log(`MongoDB Connected: ${conn.connection.host}`);
-	} catch (error) {
-		console.error(`Failed to connect to MongoDB: ${error}`);
-		process.exit(1);
-	}
-};
-connectDB();
+app.use(express.static("public"));
+app.use(
+	session({
+		secret: process.env.SECRET_KEY,
+		resave: false,
+		saveUninitialized: true,
+		store: store,
+		cookie: {
+			maxAge: 1000 * 60 * 60 * 24 * 7,
+		},
+	})
+);
 
 app.get("/", (req, res) => {
 	try {
@@ -116,8 +130,30 @@ app.get("/shop/:productType", async (req, res) => {
 	}
 });
 
-app.listen(port, () => {
-	console.log(`Server started on port ${port}`);
-}).on("error", (err) => {
-	console.error(err);
+app.get("/shop/:productType/:productId", async (req, res) => {
+	try {
+		const productType = req.params.productType.toLowerCase();
+		const productId = req.params.productId;
+		const productDetails = await Product.findById(productId);
+		ejs.renderFile(
+			path.join(__dirname, "productDetails.ejs"),
+			{ productType, productDetails },
+			(err, html) => {
+				if (err) {
+					console.error(`Error rendering template: ${err}`);
+					res.status(500).send("Error rendering template");
+				} else {
+					res.send(html);
+				}
+			}
+		);
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+connectDB().then(() => {
+	app.listen(port, () => {
+		console.log(`Listening on port ${port}`);
+	});
 });

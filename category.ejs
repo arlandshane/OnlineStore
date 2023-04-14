@@ -37,32 +37,37 @@
 			<% if (products.length === 0) { %>
 			<p style="text-align: center">No products in this category</p>
 			<% } else { %> <% products.forEach((product) => { %>
-			<div style="display: flex; flex-direction: column">
-				<img
-					style="margin: auto"
-					loading="lazy"
-					class="product-img"
-					src="<%= product.image %>"
-					alt=""
-				/>
-				<p style="text-align: center; margin: 0"><%= product.name %></p>
-				<p style="text-align: center; margin: 0">
-					Rs. <%= product.price %>/- <% if(product.originalPrice) { %>
-					<span
-						style="
-							text-decoration: line-through;
-							font-size: 0.8rem;
-							color: gray;
-						"
-					>
-						Rs. <%= product.originalPrice %>
-					</span>
-					<% } %>
-				</p>
-				<p style="text-align: center; margin: 0">
-					<%= product.category %>
-				</p>
-			</div>
+			<a class="link" href="/shop/<%= productType %>/<%= product._id %>">
+				<div style="display: flex; flex-direction: column">
+					<img
+						style="margin: auto"
+						loading="lazy"
+						class="product-img"
+						src="<%= product.image %>"
+						alt=""
+					/>
+					<p style="text-align: center; margin: 0">
+						<%= product.name %>
+					</p>
+					<p style="text-align: center; margin: 0">
+						Rs. <%= product.price %>/- <% if(product.originalPrice)
+						{ %>
+						<span
+							style="
+								text-decoration: line-through;
+								font-size: 0.8rem;
+								color: gray;
+							"
+						>
+							Rs. <%= product.originalPrice %>
+						</span>
+						<% } %>
+					</p>
+					<p style="text-align: center; margin: 0">
+						<%= product.category %>
+					</p>
+				</div>
+			</a>
 			<% }) %> <% } %>
 		</section>
 	</body>
