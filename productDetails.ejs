@@ -25,12 +25,27 @@
 				<div style="color: #393e46">Store</div>
 			</a>
 
+			<% if (user && user.username) { %>
 			<span style="align-self: center">
-				<i class="fa-solid fa-circle-user fa-xl"></i>
+				<i class="fa-regular fa-circle-user fa-lg"></i>
 				<span style="padding: 0 0.5rem"></span>
 				<i class="fa-solid fa-cart-shopping"></i>
 				0
 			</span>
+			<% } else { %>
+			<div style="align-self: center; display: flex; gap: 1rem">
+				<button class="cta">
+					<a class="link" href="/login">
+						<span class="hover-underline-animation">Login</span>
+					</a>
+				</button>
+				<button class="cta">
+					<a class="link" href="/signUp">
+						<span class="hover-underline-animation">Sign-up</span>
+					</a>
+				</button>
+			</div>
+			<% } %>
 		</nav>
 		<p style="font-weight: 500">Home / shop / <%= productType %> /</p>
 		<section style="display: flex; justify-content: space-evenly">

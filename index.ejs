@@ -25,13 +25,29 @@
 				Store
 			</div>
 
+			<% if (user && user.username) { %>
 			<span style="align-self: center">
-				<i class="fa-solid fa-circle-user fa-xl"></i>
+				<i class="fa-regular fa-circle-user fa-lg"></i>
 				<span style="padding: 0 0.5rem"></span>
 				<i class="fa-solid fa-cart-shopping"></i>
 				0
 			</span>
+			<% } else { %>
+			<div style="align-self: center; display: flex; gap: 1rem">
+				<button class="cta">
+					<a class="link" href="/login">
+						<span class="hover-underline-animation">Login</span>
+					</a>
+				</button>
+				<button class="cta">
+					<a class="link" href="/signUp">
+						<span class="hover-underline-animation">Sign-up</span>
+					</a>
+				</button>
+			</div>
+			<% } %>
 		</nav>
+
 		<!-- -------------------------------------------------- -->
 		<section id="images-section" style="position: relative">
 			<img id="landing-image" src="/images/shirts.jpg" alt="" />
@@ -57,20 +73,6 @@
 		</div>
 		<hr style="width: 60%" />
 		<br />
-
-		<!-- <h2 style="text-align: center">
-			<a
-				style="
-					border: 1px solid salmon;
-					padding: 0.2rem 0.5rem;
-					border-radius: 0.5rem;
-				"
-				class="link"
-				href="/addProduct"
-			>
-				Add Product
-			</a>
-		</h2> -->
 
 		<!-- -------------------------------------------------- -->
 		<p style="text-align: center; font-size: 2rem">Featured Categories</p>

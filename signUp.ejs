@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Login</title>
+		<link rel="stylesheet" href="/css/style.css" />
+		<style>
+			.radio {
+				width: 1rem;
+				height: 1rem;
+				transition: transform 200ms;
+			}
+			.radio:hover {
+				transform: scale(1.2);
+			}
+		</style>
+	</head>
+	<body>
+		<nav id="nav">
+			<a
+				style="
+					font-size: 2rem;
+					font-weight: 500;
+					margin: 0;
+					align-self: center;
+				"
+				class="link"
+				href="/"
+			>
+				<div style="color: #393e46">Store</div>
+			</a>
+			<button class="cta">
+				<a class="link" href="/login">
+					<span class="hover-underline-animation">Login Instead</span>
+				</a>
+			</button>
+		</nav>
+		<section
+			style="
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				transform: translate(-50%, -50%);
+			"
+		>
+			<p
+				style="
+					font-size: larger;
+					font-weight: 500;
+					color: #393e46;
+					text-align: center;
+				"
+			>
+				SIGN UP TO STORE
+			</p>
+			<form class="form" action="/signUp" method="post">
+				<div style="display: flex; justify-content: space-between">
+					<label class="paragraph" for="username">Username:</label>
+					<input
+						type="text"
+						name="username"
+						class="input-box"
+						placeholder="Username *"
+					/>
+				</div>
+				<div style="display: flex; justify-content: space-between">
+					<label class="paragraph" for="email">Email:</label>
+					<input
+						type="text"
+						name="email"
+						class="input-box"
+						placeholder="Email *"
+					/>
+				</div>
+				<div style="display: flex; justify-content: space-between">
+					<label class="paragraph" for="password">Password:</label>
+					<input
+						type="text"
+						name="password"
+						class="input-box"
+						placeholder="Password *"
+					/>
+				</div>
+				<div style="display: flex; justify-content: space-between">
+					<label class="paragraph" for="phone">Phone:</label>
+					<input
+						type="number"
+						name="phone"
+						class="input-box"
+						placeholder="+91 "
+					/>
+				</div>
+				<br />
+				<div
+					style="
+						display: flex;
+						justify-content: space-between;
+						gap: 1rem;
+					"
+				>
+					<label for="gender">Gender:</label>
+					<span>
+						<input
+							class="radio"
+							type="radio"
+							name="gender"
+							value="male"
+						/>
+						Male
+					</span>
+					<span>
+						<input
+							class="radio"
+							type="radio"
+							name="gender"
+							value="female"
+						/>
+						Female
+					</span>
+					<span>
+						<input
+							class="radio"
+							type="radio"
+							name="gender"
+							value="other"
+						/>
+						Other
+					</span>
+				</div>
+				<br />
+				<div
+					style="
+						display: flex;
+						justify-content: center;
+						margin-top: 0.5rem;
+					"
+				>
+					<button class="black-btn hover-outline" type="submit">
+						Sign Up
+					</button>
+				</div>
+			</form>
+		</section>
+	</body>
+</html>

@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const Product = require("./models/product");
+const User = require("./models/user");
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -44,9 +45,32 @@ app.use(
 	})
 );
 
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
 	try {
-		ejs.renderFile(path.join(__dirname, "index.ejs"), {}, (err, html) => {
+		let user;
+		if (req.session.username) {
+			user = await User.findById(req.session.userId);
+		}
+		ejs.renderFile(
+			path.join(__dirname, "index.ejs"),
+			{ user },
+			(err, html) => {
+				if (err) {
+					console.error(`Error rendering template: ${err}`);
+					res.status(500).send("Error rendering template");
+				} else {
+					res.send(html);
+				}
+			}
+		);
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+app.get("/login", async (req, res) => {
+	try {
+		ejs.renderFile(path.join(__dirname, "login.ejs"), {}, (err, html) => {
 			if (err) {
 				console.error(`Error rendering template: ${err}`);
 				res.status(500).send("Error rendering template");
@@ -57,6 +81,68 @@ app.get("/", (req, res) => {
 	} catch (error) {
 		console.log(error);
 	}
+});
+
+app.post("/login", async (req, res) => {
+	try {
+		const { email, password } = req.body;
+		const user = await User.findOne({ email: email });
+		if (user) {
+			if (user.password === password) {
+				req.session.username = user.username;
+				req.session.userId = user._id;
+				res.redirect("/");
+			} else {
+				res.status(401).send("Invalid credentials");
+			}
+		} else {
+			res.status(401).send("User not found");
+		}
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+app.get("/signUp", async (req, res) => {
+	try {
+		ejs.renderFile(path.join(__dirname, "signUp.ejs"), {}, (err, html) => {
+			if (err) {
+				console.error(`Error rendering template: ${err}`);
+				res.status(500).send("Error rendering template");
+			} else {
+				res.send(html);
+			}
+		});
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+app.post("/signUp", async (req, res) => {
+	try {
+		const { email, password, firstName, lastName, phone, gender } =
+			req.body;
+		const trimmedFields = {};
+		for (const key in req.body) {
+			trimmedFields[key] = req.body[key].trim();
+		}
+		const newUser = new User(trimmedFields);
+		await newUser.save();
+		res.status(201).redirect("/login");
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+app.get("/addProduct", (req, res) => {
+	ejs.renderFile(path.join(__dirname, "addProduct.ejs"), {}, (err, html) => {
+		if (err) {
+			console.error(`Error rendering template: ${err}`);
+			res.status(500).send("Error rendering template");
+		} else {
+			res.send(html);
+		}
+	});
 });
 
 app.get("/addProduct", (req, res) => {
@@ -83,18 +169,22 @@ app.post("/addProduct", async (req, res) => {
 
 app.get("/shop", async (req, res) => {
 	try {
+		let user;
+		if (req.session.username) {
+			user = await User.findById(req.session.userId);
+		}
 		const curated = req.query.curated;
-		let products;
+		let products, curatedCheck;
 		if (curated !== undefined && curated !== null && curated !== "") {
-			products = await Product.find({
-				category: { $regex: "curated", $options: "i" },
-			});
+			products = await Product.find({ curated: true });
+			curatedCheck = true;
 		} else {
 			products = await Product.find();
+			curatedCheck = false;
 		}
 		ejs.renderFile(
 			path.join(__dirname, "shop.ejs"),
-			{ products },
+			{ products, curatedCheck, user },
 			(err, html) => {
 				if (err) {
 					console.error(`Error rendering template: ${err}`);
@@ -111,6 +201,10 @@ app.get("/shop", async (req, res) => {
 
 app.get("/shop/:productType", async (req, res) => {
 	try {
+		let user;
+		if (req.session.username) {
+			user = await User.findById(req.session.userId);
+		}
 		const productType = req.params.productType.toLowerCase();
 		const products = await Product.find({
 			category: {
@@ -122,7 +216,7 @@ app.get("/shop/:productType", async (req, res) => {
 		});
 		ejs.renderFile(
 			path.join(__dirname, "category.ejs"),
-			{ products, productType },
+			{ products, productType, user },
 			(err, html) => {
 				if (err) {
 					console.error(`Error rendering template: ${err}`);
@@ -140,12 +234,16 @@ app.get("/shop/:productType", async (req, res) => {
 
 app.get("/shop/:productType/:productId", async (req, res) => {
 	try {
+		let user;
+		if (req.session.username) {
+			user = await User.findById(req.session.userId);
+		}
 		const productType = req.params.productType.toLowerCase();
 		const productId = req.params.productId;
 		const productDetails = await Product.findById(productId);
 		ejs.renderFile(
 			path.join(__dirname, "productDetails.ejs"),
-			{ productType, productDetails },
+			{ productType, productDetails, user },
 			(err, html) => {
 				if (err) {
 					console.error(`Error rendering template: ${err}`);

@@ -30,14 +30,33 @@
 				>
 			</div>
 
+			<% if (user && user.username) { %>
 			<span style="align-self: center">
-				<i class="fa-solid fa-circle-user fa-xl"></i>
+				<i class="fa-regular fa-circle-user fa-lg"></i>
 				<span style="padding: 0 0.5rem"></span>
 				<i class="fa-solid fa-cart-shopping"></i>
 				0
 			</span>
+			<% } else { %>
+			<div style="align-self: center; display: flex; gap: 1rem">
+				<button class="cta">
+					<a class="link" href="/login">
+						<span class="hover-underline-animation">Login</span>
+					</a>
+				</button>
+				<button class="cta">
+					<a class="link" href="/signUp">
+						<span class="hover-underline-animation">Sign-up</span>
+					</a>
+				</button>
+			</div>
+			<% } %>
 		</nav>
+		<% if(curatedCheck) { %>
+		<p style="font-weight: 500; margin: 1rem">Home / shop / curated</p>
+		<% } else { %>
 		<p style="font-weight: 500; margin: 1rem">Home / shop</p>
+		<% } %>
 		<section id="shop-img-section">
 			<% products.reverse().forEach((product) => { %>
 			<div style="display: flex; flex-direction: column">
@@ -62,9 +81,22 @@
 					</span>
 					<% } %>
 				</p>
+				<% if(product.curated) { %>
+				<p
+					style="
+						text-align: center;
+						margin: 0;
+						font-size: small;
+						color: darkcyan;
+					"
+				>
+					CURATED
+				</p>
+				<% } else { %>
 				<p style="text-align: center; margin: 0">
 					<%= product.category %>
 				</p>
+				<% } %>
 			</div>
 			<% }) %>
 		</section>
