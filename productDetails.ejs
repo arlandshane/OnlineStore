@@ -177,7 +177,7 @@
 				</div>
 				<div style="display: flex; justify-content: space-evenly">
 					<form
-						action="/wishlist/add/<%= productDetails._id %>"
+						action="/wishlist/<%= user.wishlist.includes(productDetails._id.toString()) ? 'remove' : 'add' %>/<%= productDetails._id %>"
 						method="post"
 					>
 						<button type="submit" class="black-btn">
@@ -188,7 +188,7 @@
 						</button>
 					</form>
 					<form
-						action="/cart/add/<%= productDetails._id %>"
+						action="/cart/<%= user.cart.some(item => item.product.toString() === productDetails._id.toString()) ? 'remove' : 'add' %>/<%= productDetails._id %>"
 						method="post"
 					>
 						<button type="submit" class="black-btn">
