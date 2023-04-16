@@ -7,6 +7,9 @@
 	.carousel-text {
 		display: block !important;
 	}
+	.OnlyPhones {
+		display: flex !important;
+	}
 }
 
 @keyframes anime {
@@ -38,7 +41,7 @@ body {
 	font-family: "Montserrat", sans-serif;
 }
 
-#images-section {
+#main-section {
 	display: flex;
 	gap: 1rem;
 	margin: 1rem 0;

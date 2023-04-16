@@ -22,7 +22,56 @@
 				class="link"
 				href="/"
 			>
-				<div style="color: #393e46">Store</div>
+				<div style="color: #393e46">
+					<svg
+						style="
+							aspect-ratio: 16/9;
+							width: 5rem;
+							position: relative;
+							top: 0.5rem;
+						"
+						viewBox="0 0 1725 1113"
+						fill="none"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<g clip-path="url(#clip0_4_8)">
+							<path
+								d="M0.655762 496C0.655762 479.431 14.0872 466 30.6558 466H75.6558C92.2243 466 105.656 479.431 105.656 496V743C105.656 759.569 92.2243 773 75.6558 773H30.6558C14.0872 773 0.655762 759.569 0.655762 743V496Z"
+								fill="black"
+							/>
+							<path
+								d="M1607.98 94C1607.98 77.4315 1621.41 64 1637.98 64H1694.98C1711.54 64 1724.98 77.4315 1724.98 94V484C1724.98 500.569 1711.54 514 1694.98 514H1637.98C1621.41 514 1607.98 500.569 1607.98 484V94Z"
+								fill="black"
+							/>
+							<path
+								d="M1442.98 221C1442.98 204.431 1456.41 191 1472.98 191H1529.98C1546.54 191 1559.98 204.431 1559.98 221V611C1559.98 627.569 1546.54 641 1529.98 641H1472.98C1456.41 641 1442.98 627.569 1442.98 611V221Z"
+								fill="black"
+							/>
+							<path
+								d="M483.976 187C483.976 170.431 497.407 157 513.976 157H557.976C574.544 157 587.976 170.431 587.976 187V743C587.976 759.569 574.544 773 557.976 773H513.976C497.407 773 483.976 759.569 483.976 743V187Z"
+								fill="black"
+							/>
+							<path
+								d="M1277.39 29.9502C1277.39 13.3817 1290.82 0 1307.39 0H1364.39C1380.96 0 1394.39 13.4315 1394.39 30V699.007C1394.39 699.669 1394.41 700.236 1394.44 700.896C1395.3 716.066 1404.93 919.886 1307.89 1016C1045.89 1275.5 1277.39 954.541 1277.39 700C1277.39 244.858 1277.39 85.641 1277.39 29.9502Z"
+								fill="black"
+							/>
+							<path
+								d="M1182.48 465C1182.48 599.733 1071.4 710.5 932.476 710.5C793.547 710.5 682.476 599.735 682.476 465C682.476 330.265 793.547 219.5 932.476 219.5C1071.4 219.5 1182.48 330.267 1182.48 465Z"
+								stroke="black"
+								stroke-width="125"
+							/>
+							<path
+								d="M7.34434 205.304C-9.4522 185.975 4.41285 156.18 30.2039 156.18H90.9166C99.7833 156.18 108.212 160.018 113.969 166.678L568.752 692.786C579.588 705.321 578.082 724.115 565.39 734.765L531.666 763.064C518.997 773.694 499.965 772.194 489.116 759.711L7.34434 205.304Z"
+								fill="black"
+							/>
+						</g>
+						<defs>
+							<clipPath id="clip0_4_8">
+								<rect width="1725" height="1113" fill="white" />
+							</clipPath>
+						</defs>
+					</svg>
+				</div>
 			</a>
 
 			<% if (user && user.username) { %>
@@ -48,18 +97,48 @@
 			<% } %>
 		</nav>
 		<p style="font-weight: 500">Home / shop / <%= productType %> /</p>
-		<section style="display: flex; justify-content: space-evenly">
-			<div>
+		<section
+			style="
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-between;
+			"
+		>
+			<div style="padding: 0.5rem; flex-grow: 1">
 				<img
-					style="width: 20rem; border-radius: 0.5rem"
+					style="max-width: 20rem; border-radius: 0.5rem"
 					src="<%= productDetails.image %>"
 					alt=""
 				/>
 			</div>
-			<div>
-				<p style="font-size: 1.5rem; font-weight: 500; color: #393e46">
-					<%= productDetails.name %>
-				</p>
+			<div
+				style="
+					border: 1px solid gray;
+					border-radius: 0.5rem;
+					min-width: 20.5rem;
+					flex-grow: 1;
+				"
+			>
+				<div>
+					<p
+						style="
+							text-align: center;
+							font-size: 1.5rem;
+							font-weight: 500;
+							color: #393e46;
+						"
+					>
+						<%= productDetails.name %>
+					</p>
+				</div>
+				<div style="display: flex; justify-content: space-evenly">
+					<a href="/wishtlist">
+						<button class="black-btn">Wishtlist</button>
+					</a>
+					<a href="/addToCart">
+						<button class="black-btn">Add to Cart</button>
+					</a>
+				</div>
 			</div>
 		</section>
 	</body>
