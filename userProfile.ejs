@@ -3,12 +3,92 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Shop</title>
+		<title>User Profile</title>
 		<link rel="stylesheet" href="/css/style.css" />
 		<script
 			src="https://kit.fontawesome.com/cd9e976117.js"
 			crossorigin="anonymous"
 		></script>
+		<style>
+			button {
+				position: relative;
+				display: inline-block;
+				cursor: pointer;
+				outline: none;
+				border: 0;
+				vertical-align: middle;
+				text-decoration: none;
+				background: transparent;
+				padding: 0;
+				font-size: inherit;
+				font-family: inherit;
+			}
+			button.learn-more {
+				width: 12rem;
+				height: auto;
+			}
+			button.learn-more .circle {
+				transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+				position: relative;
+				display: block;
+				margin: 0;
+				width: 3rem;
+				height: 3rem;
+				background: #282936;
+				border-radius: 1.625rem;
+			}
+			button.learn-more .circle .icon {
+				transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				background: #fff;
+			}
+			button.learn-more .circle .icon.arrow {
+				transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+				left: 0.625rem;
+				width: 1.125rem;
+				height: 0.125rem;
+				background: none;
+			}
+			button.learn-more .circle .icon.arrow::before {
+				position: absolute;
+				content: "";
+				top: -0.29rem;
+				right: 0.0625rem;
+				width: 0.625rem;
+				height: 0.625rem;
+				border-top: 0.125rem solid #fff;
+				border-right: 0.125rem solid #fff;
+				transform: rotate(45deg);
+			}
+			button.learn-more .button-text {
+				transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				padding: 0.75rem 0;
+				margin: 0 0 0 1.85rem;
+				color: #282936;
+				font-weight: 700;
+				line-height: 1.6;
+				text-align: center;
+				text-transform: uppercase;
+			}
+			button:hover .circle {
+				width: 100%;
+			}
+			button:hover .circle .icon.arrow {
+				background: #fff;
+				transform: translate(1rem, 0);
+			}
+			button:hover .button-text {
+				color: #fff;
+			}
+		</style>
 	</head>
 	<body>
 		<nav id="nav">
@@ -73,18 +153,12 @@
 					</svg>
 				</div>
 			</a>
-			<div style="align-self: center">
-				<a href="/addProduct"
-					><button class="black-btn">Add Product</button></a
-				>
-			</div>
-
-			<% if (user && user.username) { %>
 			<span style="align-self: center; display: flex; gap: 1rem">
 				<span>
-					<a class="link" href="/userProfile">
-						<i class="fa-regular fa-circle-user fa-lg"></i>
-					</a>
+					<i class="fa-solid fa-magnifying-glass fa-lg"></i>
+				</span>
+				<span>
+					<i class="fa-regular fa-circle-user fa-lg"></i>
 				</span>
 				<span>
 					<a class="link" href="/wishlist">
@@ -98,75 +172,35 @@
 				</span>
 				0
 			</span>
-			<% } else { %>
-			<div style="align-self: center; display: flex; gap: 1rem">
-				<button class="cta">
-					<a class="link" href="/login">
-						<span class="hover-underline-animation">Login</span>
-					</a>
-				</button>
-				<button class="cta">
-					<a class="link" href="/signUp">
-						<span class="hover-underline-animation">Sign-up</span>
-					</a>
-				</button>
-			</div>
-			<% } %>
 		</nav>
-		<% if(curatedCheck) { %>
-		<p style="font-weight: 500; margin: 1rem">Home / shop / curated</p>
-		<% } else { %>
-		<p style="font-weight: 500; margin: 1rem">Home / shop</p>
-		<% } %>
-		<section id="shop-img-section">
-			<% products.reverse().forEach((product) => { %>
-			<a class="link" href="/shop/view/<%= product._id %>">
-				<div style="display: flex; flex-direction: column">
-					<img
-						style="margin: auto"
-						loading="lazy"
-						class="product-img"
-						src="<%= product.image %>"
-						alt=""
-					/>
-					<p style="text-align: center; margin: 0">
-						<%= product.name %>
-					</p>
-					<p style="text-align: center; margin: 0">
-						Rs. <%= product.price %>/- <% if(product.originalPrice)
-						{ %>
-						<span
-							style="
-								text-decoration: line-through;
-								font-size: 0.8rem;
-								color: gray;
-							"
-						>
-							Rs. <%= product.originalPrice %>
+		<section style="padding: 0 1rem">
+			<p style="font-size: 2rem"><%= user.username %></p>
+			<div style="display: flex; flex-direction: column; row-gap: 1rem">
+				<a class="link" href="/logout">
+					<button class="learn-more">
+						<span class="circle" aria-hidden="true">
+							<span class="icon arrow"></span>
 						</span>
-						<% } %>
-					</p>
-					<% if(product.curated) { %>
-					<p
-						style="
-							text-align: center;
-							margin: 0;
-							font-size: small;
-							color: darkcyan;
-						"
-					>
-						CURATED
-					</p>
-					<% } else { %>
-					<p style="text-align: center; margin: 0">
-						<%= product.category %>
-					</p>
-					<% } %>
-				</div>
-			</a>
-
-			<% }) %>
+						<span class="button-text">Logout</span>
+					</button>
+				</a>
+				<a class="link" href="/wishlist">
+					<button class="learn-more">
+						<span class="circle" aria-hidden="true">
+							<span class="icon arrow"></span>
+						</span>
+						<span class="button-text">Wishlist</span>
+					</button>
+				</a>
+				<a href="/cart">
+					<button class="learn-more">
+						<span class="circle" aria-hidden="true">
+							<span class="icon arrow"></span>
+						</span>
+						<span class="button-text">Cart</span>
+					</button>
+				</a>
+			</div>
 		</section>
 	</body>
 </html>
-<!-- add size field -->

@@ -3,38 +3,12 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Add Product</title>
+		<title>Cart</title>
 		<link rel="stylesheet" href="/css/style.css" />
 		<script
 			src="https://kit.fontawesome.com/cd9e976117.js"
 			crossorigin="anonymous"
 		></script>
-		<style>
-			div:has(label) {
-				display: flex;
-				gap: 1rem;
-			}
-			label {
-				align-self: center;
-			}
-			input {
-				height: 2rem;
-				border: 1px solid gray;
-				border-radius: 0.5rem;
-				padding-left: 0.5rem;
-			}
-			button {
-				height: 2rem;
-				background-color: black;
-				color: white;
-				border: 1px solid gray;
-				border-radius: 0.5rem;
-			}
-			button:hover {
-				background-color: white;
-				color: black;
-			}
-		</style>
 	</head>
 	<body>
 		<nav id="nav">
@@ -99,84 +73,80 @@
 					</svg>
 				</div>
 			</a>
-
-			<span style="align-self: center">
-				<i class="fa-regular fa-circle-user fa-lg"></i>
-				<span style="padding: 0 0.5rem"></span>
-				<i class="fa-solid fa-cart-shopping"></i>
+			<span style="align-self: center; display: flex; gap: 1rem">
+				<span>
+					<a class="link" href="/userProfile">
+						<i class="fa-regular fa-circle-user fa-lg"></i>
+					</a>
+				</span>
+				<span>
+					<a class="link" href="/wishlist">
+						<i class="fa-regular fa-heart fa-lg"></i>
+					</a>
+				</span>
+				<span>
+					<i class="fa-solid fa-cart-shopping"></i>
+				</span>
 				0
 			</span>
 		</nav>
-		<h3 style="margin-left: 1rem">Enter Product Details</h3>
-		<form
-			style="
-				display: flex;
-				flex-direction: column;
-				row-gap: 1rem;
-				margin-left: 1rem;
-			"
-			action="/addProduct"
-			method="post"
-		>
-			<div>
-				<label for="adderName">*Your Name: </label>
-				<input
-					type="text"
-					name="adderName"
-					placeholder="Elon Musk"
-					required
-				/>
-			</div>
-			<div>
-				<label for="name">*Product Name: </label>
-				<input
-					type="text"
-					name="name"
-					placeholder="Black Tshirt"
-					required
-				/>
-			</div>
-			<div>
-				<label for="price">*Product Price: (₹) </label>
-				<input type="number" name="price" placeholder="499" required />
-			</div>
-			<div>
-				<label for="originalPrice">Original Price: (₹) </label>
-				<input type="text" name="originalPrice" placeholder="699" />
-			</div>
-			<div style="display: flex; flex-wrap: wrap">
-				<label for="image">Product Image Link: </label>
-				<input type="url" name="image" placeholder="Main Image Link" />
-				<input type="url" name="image2" placeholder="2nd Image Link" />
-				<input type="url" name="image3" placeholder="3rd Image Link" />
-				<input type="url" name="image4" placeholder="4th Image Link" />
-				<input type="url" name="image5" placeholder="5th Image Link" />
-			</div>
-			<div>
-				<label for="description">Product Description: </label>
-				<input
-					type="text"
-					name="description"
-					placeholder="Red, Shirt, Cotton"
-				/>
-			</div>
-			<div>
-				<label for="category">Product Category: </label>
-				<input type="text" name="category" placeholder="Shirt/Tshirt" />
-			</div>
-			<div>
-				<label for="curated">Curated: </label>
-				<input
-					style="width: 1.1rem"
-					type="checkbox"
-					name="curated"
-					value="true"
-				/>
-				<span style="align-self: center">true</span>
-			</div>
-			<div>
-				<button type="submit">Submit</button>
-			</div>
-		</form>
+		<p style="font-weight: 500; margin: 1rem">
+			Home / <%= user.username %>'s cart
+		</p>
+		<section id="shop-img-section">
+			<% cart.forEach(item => { %>
+			<a class="link" href="/shop/cart/<%= item.product._id %>">
+				<div
+					style="
+						display: flex;
+						align-items: center;
+						flex-direction: column;
+					"
+				>
+					<img
+						style="margin: auto"
+						loading="lazy"
+						class="product-img"
+						src="<%= item.product.image %>"
+						alt=""
+					/>
+					<p style="text-align: center; margin: 0">
+						<%= item.product.name %>
+					</p>
+					<p style="text-align: center; margin: 0">
+						Rs. <%= item.product.price %>/- <%
+						if(item.product.originalPrice) { %>
+						<span
+							style="
+								text-decoration: line-through;
+								font-size: 0.8rem;
+								color: gray;
+							"
+						>
+							Rs. <%= product.originalPrice %>
+						</span>
+						<% } %>
+					</p>
+					<p><%= item.product.description %></p>
+					<% if(item.product.curated) { %>
+					<p
+						style="
+							text-align: center;
+							margin: 0;
+							font-size: small;
+							color: darkcyan;
+						"
+					>
+						CURATED
+					</p>
+					<% } else { %>
+					<p style="text-align: center; margin: 0">
+						<%= item.product.category %>
+					</p>
+					<% } %>
+				</div>
+			</a>
+			<% }) %>
+		</section>
 	</body>
 </html>

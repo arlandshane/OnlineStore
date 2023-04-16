@@ -85,21 +85,24 @@
 				transform: translate(-50%, -50%);
 			"
 		>
-			<p
+			<div
 				style="
-					font-size: larger;
-					font-weight: 500;
-					color: #393e46;
-					text-align: center;
+					display: flex;
+					gap: 5%;
+					align-items: center;
+					justify-content: center;
 				"
 			>
-				LOGIN TO
+				<p style="font-size: larger; font-weight: 500; color: #393e46">
+					LOGIN TO
+				</p>
 				<svg
 					style="
 						aspect-ratio: 16/9;
 						width: 5rem;
 						position: relative;
 						top: 0.5rem;
+						padding-bottom: 1rem;
 					"
 					viewBox="0 0 1725 1113"
 					fill="none"
@@ -142,27 +145,30 @@
 						</clipPath>
 					</defs>
 				</svg>
-			</p>
+			</div>
+
 			<form class="form" action="/login" method="post">
-				<div style="display: flex; justify-content: space-between">
-					<label class="paragraph" for="email">Email:</label>
-					<input
-						type="text"
-						name="email"
-						class="input-box"
-						placeholder="Email"
-					/>
-				</div>
-				<br />
-				<div style="display: flex; justify-content: space-between">
-					<label class="paragraph" for="password">Password:</label>
-					<input
-						type="text"
-						name="password"
-						class="input-box"
-						placeholder="Password"
-					/>
-				</div>
+				<label class="paragraph" for="email">Email/Username:</label>
+				<input
+					type="email"
+					name="email"
+					class="input-box"
+					placeholder="Email"
+				/>
+				<p style="text-align: center; margin: 0">or</p>
+				<input
+					type="text"
+					name="username"
+					class="input-box"
+					placeholder="Username"
+				/>
+				<label class="paragraph" for="password">Password:</label>
+				<input
+					type="text"
+					name="password"
+					class="input-box"
+					placeholder="Password"
+				/>
 				<br />
 				<div
 					style="

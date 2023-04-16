@@ -75,10 +75,22 @@
 			</a>
 
 			<% if (user && user.username) { %>
-			<span style="align-self: center">
-				<i class="fa-regular fa-circle-user fa-lg"></i>
-				<span style="padding: 0 0.5rem"></span>
-				<i class="fa-solid fa-cart-shopping"></i>
+			<span style="align-self: center; display: flex; gap: 1rem">
+				<span>
+					<a class="link" href="/userProfile">
+						<i class="fa-regular fa-circle-user fa-lg"></i>
+					</a>
+				</span>
+				<span>
+					<a class="link" href="/wishlist">
+						<i class="fa-regular fa-heart fa-lg"></i>
+					</a>
+				</span>
+				<span>
+					<a class="link" href="/cart">
+						<i class="fa-solid fa-cart-shopping"></i>
+					</a>
+				</span>
 				0
 			</span>
 			<% } else { %>
@@ -96,27 +108,50 @@
 			</div>
 			<% } %>
 		</nav>
-		<p style="font-weight: 500">Home / shop / <%= productType %> /</p>
+		<p style="font-weight: 500; margin: 1rem">
+			Home / shop / <%= productType %> /
+		</p>
 		<section
-			style="
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: space-between;
-			"
+			style="display: flex; flex-wrap: wrap; justify-content: center"
 		>
-			<div style="padding: 0.5rem; flex-grow: 1">
+			<div style="padding: 0 0.5rem; width: 55%">
 				<img
 					style="max-width: 20rem; border-radius: 0.5rem"
 					src="<%= productDetails.image %>"
 					alt=""
 				/>
+				<% if(productDetails.image2) { %>
+				<img
+					style="max-width: 20rem; border-radius: 0.5rem"
+					src="<%= productDetails.image2 %>"
+					alt=""
+				/>
+				<% } %> <% if(productDetails.image3) { %>
+				<img
+					style="max-width: 20rem; border-radius: 0.5rem"
+					src="<%= productDetails.image3 %>"
+					alt=""
+				/>
+				<% } %> <% if(productDetails.image4) { %>
+				<img
+					style="max-width: 20rem; border-radius: 0.5rem"
+					src="<%= productDetails.image4 %>"
+					alt=""
+				/>
+				<% } %> <% if(productDetails.image5) { %>
+				<img
+					style="max-width: 20rem; border-radius: 0.5rem"
+					src="<%= productDetails.image5 %>"
+					alt=""
+				/>
+				<% } %>
 			</div>
 			<div
 				style="
-					border: 1px solid gray;
+					/* border: 1px solid gray; */
 					border-radius: 0.5rem;
 					min-width: 20.5rem;
-					flex-grow: 1;
+					width: 35%;
 				"
 			>
 				<div>
@@ -130,14 +165,39 @@
 					>
 						<%= productDetails.name %>
 					</p>
+					<p style="text-align: center; color: #393e46">
+						<%= productDetails.description %>
+					</p>
+					<p style="text-align: center; color: #393e46">
+						Rs. <%= productDetails.price %>/- only
+					</p>
+					<p style="text-align: center; color: #393e46">
+						<% if(productDetails.curated) { %> Curated <% } %>
+					</p>
 				</div>
 				<div style="display: flex; justify-content: space-evenly">
-					<a href="/wishtlist">
-						<button class="black-btn">Wishtlist</button>
-					</a>
-					<a href="/addToCart">
-						<button class="black-btn">Add to Cart</button>
-					</a>
+					<form
+						action="/wishlist/add/<%= productDetails._id %>"
+						method="post"
+					>
+						<button type="submit" class="black-btn">
+							<% if
+							(!user.wishlist.includes(productDetails._id.toString()))
+							{ %> Add To Wishlist <% } else { %> Remove from
+							Wishlist <% } %>
+						</button>
+					</form>
+					<form
+						action="/cart/add/<%= productDetails._id %>"
+						method="post"
+					>
+						<button type="submit" class="black-btn">
+							<% if (!user.cart.some(item =>
+							item.product.toString() ===
+							productDetails._id.toString())) { %> Add to Cart <%
+							} else { %> Remove from Cart <% } %>
+						</button>
+					</form>
 				</div>
 			</div>
 		</section>

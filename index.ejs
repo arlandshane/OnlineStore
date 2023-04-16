@@ -3,6 +3,10 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="Shop our exclusive collection of men's trendy shirts and t-shirts. Stay stylish with our latest designs and high-quality fabrics. Perfect for fashion-forward men who want to make a statement. Free shipping available. Shop now!."
+		/>
 		<title>Store</title>
 		<link rel="stylesheet" href="/css/style.css" />
 		<script
@@ -89,10 +93,27 @@
 			</div>
 
 			<% if (user && user.username) { %>
-			<span style="align-self: center">
-				<i class="fa-regular fa-circle-user fa-lg"></i>
-				<span style="padding: 0 0.5rem"></span>
-				<i class="fa-solid fa-cart-shopping"></i>
+			<span style="align-self: center; display: flex; gap: 1rem">
+				<span>
+					<a class="link" href="/search">
+						<i class="fa-solid fa-magnifying-glass fa-lg"></i>
+					</a>
+				</span>
+				<span>
+					<a class="link" href="/userProfile">
+						<i class="fa-regular fa-circle-user fa-lg"></i>
+					</a>
+				</span>
+				<span>
+					<a class="link" href="/wishlist">
+						<i class="fa-regular fa-heart fa-lg"></i>
+					</a>
+				</span>
+				<span>
+					<a class="link" href="/cart">
+						<i class="fa-solid fa-cart-shopping"></i>
+					</a>
+				</span>
 				0
 			</span>
 			<% } else { %>
@@ -290,15 +311,14 @@
 				<p style="text-align: center; font-size: 2rem; color: #393e46">
 					About us
 				</p>
-				<p style="margin: auto; width: 50vw">
+				<p id="about-paragraph" style="margin: auto; width: 50%">
 					Welcome to our online retail store, where we offer a
 					carefully curated collection of premium shirts and t-shirts
 					for fashion-conscious individuals. We believe that style
 					shouldn't come at a high cost, which is why we offer
 					unbeatable prices on high-quality products. Embrace
 					exceptional style without breaking the bank, and never
-					settle for mediocrity. Read more about us
-					<span><a href="/about">here</a></span>
+					settle for mediocrity.
 				</p>
 			</div>
 			<hr style="width: 50%; margin-top: 2rem; margin-bottom: 2rem" />

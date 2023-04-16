@@ -85,8 +85,12 @@ app.get("/login", async (req, res) => {
 
 app.post("/login", async (req, res) => {
 	try {
-		const { email, password } = req.body;
-		const user = await User.findOne({ email: email });
+		const { email, username, password } = req.body;
+		console.log(req.body);
+		const user = await User.findOne({
+			$or: [{ email: email }, { username: username }],
+		});
+		console.log(user);
 		if (user) {
 			if (user.password === password) {
 				req.session.username = user.username;
@@ -122,11 +126,14 @@ app.post("/signUp", async (req, res) => {
 	try {
 		const { email, password, firstName, lastName, phone, gender } =
 			req.body;
-		const trimmedFields = {};
-		for (const key in req.body) {
-			trimmedFields[key] = req.body[key].trim();
-		}
-		const newUser = new User(trimmedFields);
+		const newUser = new User({
+			email,
+			password,
+			firstName,
+			lastName,
+			phone,
+			gender,
+		});
 		await newUser.save();
 		res.status(201).redirect("/login");
 	} catch (error) {
@@ -199,6 +206,35 @@ app.get("/shop", async (req, res) => {
 	}
 });
 
+app.get("/search", async (req, res) => {
+	const q = req.query.q;
+	try {
+		let products = [];
+		if (q) {
+			products = await Product.find({
+				description: {
+					$regex: new RegExp(`\\b${q.replace(/s$/, "")}\\b`, "i"),
+				},
+			});
+		}
+		ejs.renderFile(
+			path.join(__dirname, "search.ejs"),
+			{ products, q },
+			(err, html) => {
+				if (err) {
+					console.error(`Error rendering template: ${err}`);
+					res.status(500).send("Error rendering template");
+				} else {
+					res.send(html);
+				}
+			}
+		);
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ message: "Server error" });
+	}
+});
+
 app.get("/shop/:productType", async (req, res) => {
 	try {
 		let user;
@@ -253,6 +289,205 @@ app.get("/shop/:productType/:productId", async (req, res) => {
 				}
 			}
 		);
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+app.get("/wishlist", async (req, res) => {
+	try {
+		const user = await User.findById(req.session.userId).populate({
+			path: "wishlist",
+			select: "name price image description curated",
+		});
+		if (!user) {
+			return res.status(401).send("User not found");
+		} else {
+			const wishlist = user.wishlist;
+			ejs.renderFile(
+				path.join(__dirname, "wishlist.ejs"),
+				{ wishlist, user },
+				(err, html) => {
+					if (err) {
+						console.error(`Error rendering template: ${err}`);
+						res.status(500).send("Error rendering template");
+					} else {
+						res.send(html);
+					}
+				}
+			);
+		}
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error fetching wishlist");
+	}
+});
+
+app.get("/cart", async (req, res) => {
+	try {
+		const user = await User.findById(req.session.userId).populate({
+			path: "cart.product",
+			select: "name price image description curated",
+		});
+		if (!user) {
+			return res.status(401).send("User not found");
+		} else {
+			const cart = user.cart;
+			ejs.renderFile(
+				path.join(__dirname, "cart.ejs"),
+				{ cart, user },
+				(err, html) => {
+					if (err) {
+						console.error(`Error rendering template: ${err}`);
+						res.status(500).send("Error rendering template");
+					} else {
+						res.send(html);
+					}
+				}
+			);
+		}
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error fetching wishlist");
+	}
+});
+
+app.post("/wishlist/add/:productId", async (req, res) => {
+	try {
+		const productId = req.params.productId;
+		const user = await User.findById(req.session.userId);
+		if (!user) {
+			return res.status(401).send("User not found");
+		}
+		const product = await Product.findById(productId);
+		if (!product) {
+			return res.status(404).send("Product not found");
+		}
+		const existingWishlistItem = user.wishlist.find(
+			(item) => item.toString() === productId
+		);
+		if (existingWishlistItem) {
+			return res.status(400).send("Product already in wishlist");
+		}
+
+		user.wishlist.push(productId);
+		await user.save();
+		res.status(201).redirect(`/shop/wishlist/${productId}`);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error adding product to wishlist");
+	}
+});
+
+app.post("/wishlist/remove/:productId", async (req, res) => {
+	try {
+		const productId = req.params.productId;
+		const user = await User.findById(req.session.userId);
+
+		if (!user) {
+			return res.status(401).send("User not found");
+		}
+
+		const wishlistItemIndex = user.wishlist.findIndex(
+			(item) => item.toString() === productId
+		);
+
+		if (wishlistItemIndex === -1) {
+			return res.status(404).send("Product not found in wishlist");
+		}
+
+		user.wishlist.splice(wishlistItemIndex, 1);
+		await user.save();
+		res.status(200).redirect(`/shop/view/${productId}`);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error removing product from wishlist");
+	}
+});
+
+app.post("/cart/add/:productId", async (req, res) => {
+	try {
+		const productId = req.params.productId;
+		const user = await User.findById(req.session.userId);
+		if (!user) {
+			return res.status(401).send("User not found");
+		}
+		const product = await Product.findById(productId);
+		if (!product) {
+			return res.status(404).send("Product not found");
+		}
+		const existingCartItem = user.cart.find(
+			(item) => item.product.toString() === productId
+		);
+		if (existingCartItem) {
+			existingCartItem.quantity += 1;
+		} else {
+			user.cart.push({ product: productId, quantity: 1 });
+		}
+		await user.save();
+		res.status(201).redirect(`/shop/cart/${productId}`);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error adding product to cart");
+	}
+});
+
+app.post("/cart/remove/:productId", async (req, res) => {
+	try {
+		const productId = req.params.productId;
+		const user = await User.findById(req.session.userId);
+		if (!user) {
+			return res.status(401).send("User not found");
+		}
+		const cartItemIndex = user.cart.findIndex(
+			(item) => item.product.toString() === productId
+		);
+		if (cartItemIndex === -1) {
+			return res.status(404).send("Product not found in cart");
+		}
+		if (user.cart[cartItemIndex].quantity > 1) {
+			user.cart[cartItemIndex].quantity -= 1;
+		} else {
+			user.cart.splice(cartItemIndex, 1);
+		}
+		await user.save();
+		res.status(200).redirect(`/shop/view/${productId}`);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Error removing product from cart");
+	}
+});
+
+app.get("/userProfile", async (req, res) => {
+	try {
+		const user = await User.findById(req.session.userId);
+		ejs.renderFile(
+			path.join(__dirname, "userProfile.ejs"),
+			{ user },
+			(err, html) => {
+				if (err) {
+					console.error(`Error rendering template: ${err}`);
+					res.status(500).send("Error rendering template");
+				} else {
+					res.send(html);
+				}
+			}
+		);
+	} catch (error) {
+		console.log(error);
+	}
+});
+
+app.get("/logout", async (req, res) => {
+	try {
+		req.session.destroy((err) => {
+			if (err) {
+				console.error(`Error destroying session: ${err}`);
+				res.status(500).send("Error logging out");
+			} else {
+				res.redirect("/login");
+			}
+		});
 	} catch (error) {
 		console.log(error);
 	}
