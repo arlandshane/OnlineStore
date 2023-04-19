@@ -48,12 +48,16 @@ app.use(
 app.get("/", async (req, res) => {
 	try {
 		let user;
+		let cart = 0;
 		if (req.session.username) {
 			user = await User.findById(req.session.userId);
+			if (user) {
+				cart = user.cart.length;
+			}
 		}
 		ejs.renderFile(
 			path.join(__dirname, "index.ejs"),
-			{ user },
+			{ user, cart },
 			(err, html) => {
 				if (err) {
 					console.error(`Error rendering template: ${err}`);
@@ -177,8 +181,12 @@ app.post("/addProduct", async (req, res) => {
 app.get("/shop", async (req, res) => {
 	try {
 		let user;
+		let cart = 0;
 		if (req.session.username) {
 			user = await User.findById(req.session.userId);
+			if (user) {
+				cart = user.cart.length;
+			}
 		}
 		const curated = req.query.curated;
 		let products, curatedCheck;
@@ -191,7 +199,7 @@ app.get("/shop", async (req, res) => {
 		}
 		ejs.renderFile(
 			path.join(__dirname, "shop.ejs"),
-			{ products, curatedCheck, user },
+			{ products, curatedCheck, user, cart },
 			(err, html) => {
 				if (err) {
 					console.error(`Error rendering template: ${err}`);
@@ -238,8 +246,12 @@ app.get("/search", async (req, res) => {
 app.get("/shop/:productType", async (req, res) => {
 	try {
 		let user;
+		let cart = 0;
 		if (req.session.username) {
 			user = await User.findById(req.session.userId);
+			if (user) {
+				cart = user.cart.length;
+			}
 		}
 		const productType = req.params.productType.toLowerCase();
 		const products = await Product.find({
@@ -252,7 +264,7 @@ app.get("/shop/:productType", async (req, res) => {
 		});
 		ejs.renderFile(
 			path.join(__dirname, "category.ejs"),
-			{ products, productType, user },
+			{ products, productType, user, cart },
 			(err, html) => {
 				if (err) {
 					console.error(`Error rendering template: ${err}`);
@@ -271,15 +283,19 @@ app.get("/shop/:productType", async (req, res) => {
 app.get("/shop/:productType/:productId", async (req, res) => {
 	try {
 		let user;
+		let cart = 0;
 		if (req.session.username) {
 			user = await User.findById(req.session.userId);
+			if (user) {
+				cart = user.cart.length;
+			}
 		}
 		const productType = req.params.productType.toLowerCase();
 		const productId = req.params.productId;
 		const productDetails = await Product.findById(productId);
 		ejs.renderFile(
 			path.join(__dirname, "productDetails.ejs"),
-			{ productType, productDetails, user },
+			{ productType, productDetails, user, cart },
 			(err, html) => {
 				if (err) {
 					console.error(`Error rendering template: ${err}`);
@@ -419,10 +435,8 @@ app.post("/cart/add/:productId", async (req, res) => {
 		const existingCartItem = user.cart.find(
 			(item) => item.product.toString() === productId
 		);
-		if (existingCartItem) {
-			existingCartItem.quantity += 1;
-		} else {
-			user.cart.push({ product: productId, quantity: 1 });
+		if (!existingCartItem) {
+			user.cart.push({ product: productId });
 		}
 		await user.save();
 		res.status(201).redirect(`/shop/cart/${productId}`);
@@ -445,11 +459,7 @@ app.post("/cart/remove/:productId", async (req, res) => {
 		if (cartItemIndex === -1) {
 			return res.status(404).send("Product not found in cart");
 		}
-		if (user.cart[cartItemIndex].quantity > 1) {
-			user.cart[cartItemIndex].quantity -= 1;
-		} else {
-			user.cart.splice(cartItemIndex, 1);
-		}
+		user.cart.splice(cartItemIndex, 1);
 		await user.save();
 		res.status(200).redirect(`/shop/view/${productId}`);
 	} catch (error) {
