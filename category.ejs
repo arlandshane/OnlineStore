@@ -75,13 +75,23 @@
 			</a>
 
 			<% if (user && user.username) { %>
-			<span style="align-self: center">
-				<a class="link" href="/userProfile">
-					<i class="fa-regular fa-circle-user fa-lg"></i>
-				</a>
-				<span style="padding: 0 0.5rem"></span>
-				<i class="fa-solid fa-cart-shopping"></i>
-				0
+			<span style="align-self: center; display: flex; gap: 1rem">
+				<span>
+					<a class="link" href="/userProfile">
+						<i class="fa-regular fa-circle-user fa-lg"></i>
+					</a>
+				</span>
+				<span>
+					<a class="link" href="/wishlist">
+						<i class="fa-regular fa-heart fa-lg"></i>
+					</a>
+				</span>
+				<span>
+					<a class="link" href="/cart">
+						<i class="fa-solid fa-cart-shopping"></i>
+						<span> <%= user.cart.length %> </span>
+					</a>
+				</span>
 			</span>
 			<% } else { %>
 			<div style="align-self: center; display: flex; gap: 1rem">

@@ -48,16 +48,12 @@ app.use(
 app.get("/", async (req, res) => {
 	try {
 		let user;
-		let cart = 0;
 		if (req.session.username) {
 			user = await User.findById(req.session.userId);
-			if (user) {
-				cart = user.cart.length;
-			}
 		}
 		ejs.renderFile(
 			path.join(__dirname, "index.ejs"),
-			{ user, cart },
+			{ user },
 			(err, html) => {
 				if (err) {
 					console.error(`Error rendering template: ${err}`);
@@ -90,7 +86,6 @@ app.get("/login", async (req, res) => {
 app.post("/login", async (req, res) => {
 	try {
 		const { email, username, password } = req.body;
-		console.log(req.body);
 		const user = await User.findOne({
 			$or: [{ email: email }, { username: username }],
 		});
@@ -156,17 +151,6 @@ app.get("/addProduct", (req, res) => {
 	});
 });
 
-app.get("/addProduct", (req, res) => {
-	ejs.renderFile(path.join(__dirname, "addProduct.ejs"), {}, (err, html) => {
-		if (err) {
-			console.error(`Error rendering template: ${err}`);
-			res.status(500).send("Error rendering template");
-		} else {
-			res.send(html);
-		}
-	});
-});
-
 app.post("/addProduct", async (req, res) => {
 	try {
 		const addProduct = new Product(req.body);
@@ -181,12 +165,8 @@ app.post("/addProduct", async (req, res) => {
 app.get("/shop", async (req, res) => {
 	try {
 		let user;
-		let cart = 0;
 		if (req.session.username) {
 			user = await User.findById(req.session.userId);
-			if (user) {
-				cart = user.cart.length;
-			}
 		}
 		const curated = req.query.curated;
 		let products, curatedCheck;
@@ -199,7 +179,7 @@ app.get("/shop", async (req, res) => {
 		}
 		ejs.renderFile(
 			path.join(__dirname, "shop.ejs"),
-			{ products, curatedCheck, user, cart },
+			{ products, curatedCheck, user },
 			(err, html) => {
 				if (err) {
 					console.error(`Error rendering template: ${err}`);
@@ -246,12 +226,8 @@ app.get("/search", async (req, res) => {
 app.get("/shop/:productType", async (req, res) => {
 	try {
 		let user;
-		let cart = 0;
 		if (req.session.username) {
 			user = await User.findById(req.session.userId);
-			if (user) {
-				cart = user.cart.length;
-			}
 		}
 		const productType = req.params.productType.toLowerCase();
 		const products = await Product.find({
@@ -264,7 +240,7 @@ app.get("/shop/:productType", async (req, res) => {
 		});
 		ejs.renderFile(
 			path.join(__dirname, "category.ejs"),
-			{ products, productType, user, cart },
+			{ products, productType, user },
 			(err, html) => {
 				if (err) {
 					console.error(`Error rendering template: ${err}`);
@@ -282,12 +258,11 @@ app.get("/shop/:productType", async (req, res) => {
 
 app.get("/shop/:productType/:productId", async (req, res) => {
 	try {
-		let user;
-		let cart = 0;
+		let user, loggedIn;
 		if (req.session.username) {
 			user = await User.findById(req.session.userId);
 			if (user) {
-				cart = user.cart.length;
+				loggedIn = true;
 			}
 		}
 		const productType = req.params.productType.toLowerCase();
@@ -295,7 +270,7 @@ app.get("/shop/:productType/:productId", async (req, res) => {
 		const productDetails = await Product.findById(productId);
 		ejs.renderFile(
 			path.join(__dirname, "productDetails.ejs"),
-			{ productType, productDetails, user, cart },
+			{ productType, productDetails, user, loggedIn },
 			(err, html) => {
 				if (err) {
 					console.error(`Error rendering template: ${err}`);

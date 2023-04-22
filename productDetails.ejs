@@ -89,8 +89,8 @@
 				<span>
 					<a class="link" href="/cart">
 						<i class="fa-solid fa-cart-shopping"></i>
+						<span> <%= user.cart.length %> </span>
 					</a>
-					
 				</span>
 			</span>
 			<% } else { %>
@@ -175,30 +175,32 @@
 						<% if(productDetails.curated) { %> Curated <% } %>
 					</p>
 				</div>
+				<% if(loggedIn){ %>
 				<div style="display: flex; justify-content: space-evenly">
 					<form
-						action="/wishlist/<%= user.wishlist.includes(productDetails._id.toString()) ? 'remove' : 'add' %>/<%= productDetails._id %>"
+						action="/wishlist/<%= (user && user.wishlist.includes(productDetails._id.toString())) ? 'remove' : 'add' %>/<%= productDetails._id %>"
 						method="post"
 					>
 						<button type="submit" class="black-btn">
-							<% if
-							(!user.wishlist.includes(productDetails._id.toString()))
+							<% if (!user ||
+							!user.wishlist.includes(productDetails._id.toString()))
 							{ %> Add To Wishlist <% } else { %> Remove from
 							Wishlist <% } %>
 						</button>
 					</form>
 					<form
-						action="/cart/<%= user.cart.some(item => item.product.toString() === productDetails._id.toString()) ? 'remove' : 'add' %>/<%= productDetails._id %>"
+						action="/cart/<%= (user && user.cart.some(item => item.product.toString() === productDetails._id.toString())) ? 'remove' : 'add' %>/<%= productDetails._id %>"
 						method="post"
 					>
 						<button type="submit" class="black-btn">
-							<% if (!user.cart.some(item =>
+							<% if (!user || !user.cart.some(item =>
 							item.product.toString() ===
 							productDetails._id.toString())) { %> Add to Cart <%
 							} else { %> Remove from Cart <% } %>
 						</button>
 					</form>
 				</div>
+				<% } %>
 			</div>
 		</section>
 	</body>
